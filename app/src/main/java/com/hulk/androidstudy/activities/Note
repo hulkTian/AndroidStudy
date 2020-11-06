@@ -1,0 +1,46 @@
+Activity简介
+----------------------------------------------------------------------------------------------------
+Activity类是Android应用的关键组件，在编程范式中，应用是通过main()方法启动的，而Android系统是通过调用与生命周期
+特定阶段对应的回调方法来启动Activity实例中的代码。
+
+Activity的概念
+----------------------------------------------------------------------------------------------------
+Activity类充当了应用与用户交互的入口点。Activity使应用功能能被很好的分离，当一个应用调用另一个应用时，调用的时应用中
+的Activity，而不是整个应用。
+
+Activity的使用（配置清单）
+----------------------------------------------------------------------------------------------------
+声明Activity：
+    <manifest ... >
+      <application ... >
+         //android:name,是唯一且必须的属性，用于指定Activity的类名称。
+          <activity android:name=".ExampleActivity" />
+          ...
+      </application ... >
+      ...
+    </manifest >
+
+声明intent过滤器：
+    <activity android:name=".ExampleActivity" android:icon="@drawable/app_icon">
+        <intent-filter>
+            //<action> 元素指定该 Activity 会发送数据
+            <action android:name="android.intent.action.SEND" />
+            //<category>元素声明为 DEFAULT 可使 Activity 能够接收启动请求
+            <category android:name="android.intent.category.DEFAULT" />
+            //<data> 元素指定此 Activity 可以发送的数据类型
+            <data android:mimeType="text/plain" />
+        </intent-filter>
+    </activity>
+
+声明权限：
+提前声明可能使用到的权限
+    <manifest>
+       <uses-permission android:name="com.google.socialapp.permission.SHARE_POST" />
+    </manifest>
+
+管理 Activity 生命周期
+----------------------------------------------------------------------------------------------------
+onCreate()
+必须实现此回调，它会在系统首次创建 Activity 时触发。需执行基本应用启动逻辑，该逻辑在 Activity 的整个生命周期
+中只应发生一次。此方法会接收 savedInstanceState 参数，后者是包含 Activity 先前保存状态的 Bundle 对象。如果
+Activity 此前未曾存在，Bundle 对象的值为 null。
