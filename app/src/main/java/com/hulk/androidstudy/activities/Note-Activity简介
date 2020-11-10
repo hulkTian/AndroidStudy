@@ -44,3 +44,28 @@ onCreate()
 必须实现此回调，它会在系统首次创建 Activity 时触发。需执行基本应用启动逻辑，该逻辑在 Activity 的整个生命周期
 中只应发生一次。此方法会接收 savedInstanceState 参数，后者是包含 Activity 先前保存状态的 Bundle 对象。如果
 Activity 此前未曾存在，Bundle 对象的值为 null。
+
+onStart()
+onCreate()退出后，Activity将进入“已启动”状态，并对用户可见。此回调包含Activity进入前台与用户进行互动之前的
+最后准备工作。
+
+onResume()
+系统会在Activity开始与用户互动之前调用此回调。此时，Activity位于堆栈的顶部，并会捕获所有用户输入。
+应用的大部分核心功能都是在次方法中实现的。
+
+onPause()
+当Activity失去焦点并进入"已暂停"状态时，系统会调用。此时，Activity将进入后台，但对用户而言任部分可见。
+不应在onPause()中保存应用或用户数据，进行网络请求或执行数据库事务。如果用户希望界面继续更新，处于“已暂停”状态
+的Activity也可以继续更新界面。
+
+onStop()
+当Activity不可见时，系统会调用次方法。此时，Activity可能是被销毁，新的Activity启动，或者现有的Activity正在
+进入“已恢复”状态并覆盖了已停止的Activity。
+系统调用的下一个回调将是onRestart()（如果Activity重新与用户交互）或者onDestroy()（如果Activity彻底终止）。
+
+onRestart()
+当处于“已停止”状态的Activity即将重启时，系统会回调此方法。
+此回调后面总是跟着onStart()。
+
+onDestroy()
+系统会在销毁Activity之前调用此回调。目的是在销毁Activity前释放被占用的资源。

@@ -1,0 +1,73 @@
+Activity和任务的默认行为总结如下：
+1.当 Activity A 启动 Activity B 时，Activity A 会停止，但系统会保留其状态。如果用户在 Activity B 中按返回按
+钮，系统会恢复 Activity A 及其状态。
+2.当用户通过按主屏幕按钮离开任务时，当前 Activity 会停止，其任务会转到后台。系统会保留任务中每个 Activity 的状态。
+3.如果用户按返回按钮，当前 Activity 将从堆栈中退出并销毁。堆栈中的上一个 Activity 将恢复。
+4.Activity 可以多次实例化，甚至是从其他任务对其进行实例化。
+
+管理任务
+----------------------------------------------------------------------------------------------------
+需要定义Activity启动时的方式，可以借助 <activity> 清单元素中的属性以及您传递给 startActivity() 的 intent
+中的标记来实现上述目的。
+ <activity> 属性包括：taskAffinity、launchMode、allowTaskReparenting、clearTaskOnLaunch、alwaysRetainTaskState
+ finishOnTaskLaunch
+ intent 标记包括：FLAG_ACTIVITY_NEW_TASK、FLAG_ACTIVITY_CLEAR_TOP、FLAG_ACTIVITY_SINGLE_TOP
+
+定义启动模式
+----------------------------------------------------------------------------------------------------
+使用清单文件
+ <activity> 元素的 launchMode 属性指定 Activity 应该如何与任务关联。
+ launchMode 属性指定 4 种不同的启动模式：
+ "standard"（默认模式）
+ 默认值。系统在启动该 Activity 的任务中创建 Activity 的新实例，并将 intent 传送给该
+ 实例。每个实例可以属于不同的任务，一个任务可以拥有多个实例。
+ "singleTop"
+ 如果当前任务的顶部已存在 Activity 的实例，则系统会通过调用其 onNewIntent() 方法来将 intent 转送给该实例，
+ 而不是创建 Activity 的新实例。
+ 例如：堆栈为A-B—C，此时收到以C类型Activity为目标的Intent。C的现有实例位于栈顶，会通过onNewIntent()接受intent，
+ 堆栈任然为A-B-C。
+ "singleTask"
+ 系统会创建新任务，并实例化新任务的根 Activity。但是，如果另外的任务中已存在该 Activity 的实例，则系统会通过
+ 调用其 onNewIntent() 方法将 intent 转送到该现有实例，而不是创建新实例。Activity 一次只能有一个实例存在。
+ "singleInstance"
+ 与 "singleTask" 相似，唯一不同的是系统不会将任何其他 Activity 启动到包含该实例的任务中。该 Activity 始终
+ 是其任务唯一的成员；由该 Activity 启动的任何 Activity 都会在其他的任务中打开。
+
+使用 Intent 标记
+FLAG_ACTIVITY_NEW_TASK
+与“singleTask”效果相同
+FLAG_ACTIVITY_SINGLE_TOP
+与“singTop”效果相同
+FLAG_ACTIVITY_CLEAR_TOP
+如果要启动的 Activity 已经在当前任务中运行，则不会启动该 Activity 的新实例，而是会销毁位于它之上的所有其他
+Activity，并通过 onNewIntent() 将此 intent 传送给它的已恢复实例（现在位于堆栈顶部）。
+
+处理亲和性
+----------------------------------------------------------------------------------------------------
+“亲和性”表示Activity倾向于属于哪个任务。默认情况下，同一应用中的所有 Activity 彼此具有亲和性。
+使用 <activity> 元素的 taskAffinity 属性修改任何给定 Activity 的亲和性。taskAffinity 属性采用字符串值，
+该值必须不同于 <manifest> 元素中声明的默认软件包名称，因为系统使用该名称来标识应用的默认任务亲和性。
+亲和性可在两种情况下发挥作用：
+1.当启动 Activity 的 intent 包含 FLAG_ACTIVITY_NEW_TASK 标记时。
+2.当 Activity 的 allowTaskReparenting 属性设为 "true" 时。
+在这种情况下，一旦和 Activity 有亲和性的任务进入前台运行，Activity 就可从其启动的任务转移到该任务。
+
+清除返回堆栈
+----------------------------------------------------------------------------------------------------
+如果用户离开任务较长时间，系统会清除任务中除根 Activity 以外的所有 Activity。当用户再次返回到该任务时，只有
+根 Activity 会恢复。
+alwaysRetainTaskState：如果在任务的根Activity中设置为“true”，则不会发生上述默认行为。
+clearTaskOnLaunch：如果在任务的根 Activity 中将该属性设为 "true"，那么只要用户离开任务再返回，堆栈就会被清
+除到只剩根 Activity。效果与alwaysRetainTaskState相反。
+finishOnTaskLaunch：如果将该属性设为 "true"，则 Activity 仅在当前会话中归属于任务。如果用户离开任务再返回，
+则该任务将不再存在。
+
+启动任务
+----------------------------------------------------------------------------------------------------
+设置一个Activity作为任务的入口点，方法是为Activity提供一个intent过滤器，并将 "android.intent.action.MAIN"
+作为指定操作符，将"android.intent.category.LAUNCHER" 作为指定类别
+这种intent过滤器可以在应用启动器中显示Activity的图标和标签，让用户可以启动Activity并在启动后随时返回该Activity
+创建的任务。
+1.intent 过滤器可在应用启动器中显示 Activity 的图标和标签，让用户可以启动 Activity 并在启动后随时返回到该
+Activity 创建的任务
+2.用户必须能够离开任务，之后再使用此 Activity 启动器返回到该任务。

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hulk.androidstudy.activities.ActivitiesHomeActivity
+import com.hulk.androidstudy.activities.ActivityLifeCycleCaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         rv_list.adapter = Adapter(this, listData, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    0 -> startActivity(ActivitiesHomeActivity::class.java)
+                    0 -> startActivity(ActivityLifeCycleCaseActivity::class.java)
                 }
             }
         })

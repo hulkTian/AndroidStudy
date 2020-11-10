@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivitiesHomeActivity" />
+        <activity android:name=".activities.ActivityLifeCycleCaseActivity" />
         <activity android:name=".architecture_components.ArchitectureComponentsActivity" />
     </application>
 

@@ -39,4 +39,5 @@ class ActivitiesHomeActivity : FragmentActivity() {
         outState.putString("TEXT_VIEW_KEY", text_view.text as String? + 1)
         super.onSaveInstanceState(outState)
     }
+
 }

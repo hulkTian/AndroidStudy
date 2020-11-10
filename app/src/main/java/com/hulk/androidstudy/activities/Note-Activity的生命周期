@@ -1,0 +1,69 @@
+Activity 生命周期概念
+----------------------------------------------------------------------------------------------------
+为了在Activity生命周期的各个阶段之间导航转换，Activity类提供六个核心回调：onCreate(),onStart(),onResume(),
+onPause(),onStop(),onDestroy()。当Activity进入新状态时，系统会调用其中的每个回调。
+
+生命周期回调
+----------------------------------------------------------------------------------------------------
+正常启动一个界面：
+onCreate()->onStart()->onResume()
+按Home回到主屏幕：
+onPause()->onStop()
+按最近使用应用预览键：
+onPause()->onStop()
+按返回键退出Activity：
+onPause()->onStop->onDestroy()
+从主屏幕回到“已停止”状态的Activity：
+onRestart()->onStart()-onResume()
+从主屏幕回到因内存不足被销毁的Activity,savedInstanceState不为空，可以恢复数据：
+onCreate()->onStart()->onResume()
+从最近使用应用预览回到Activity：
+onRestart()->onStart()-onResume()
+用户按返回键回到“已停止”状态的Activity：
+onRestart()->onStart()-onResume()
+Activity处于“已恢复”状态，屏幕方向发生改变，一般回调流程：
+onPause()->onStop->onDestroy()->onCreate()->onStart()->onResume()
+
+Activity 状态和从内存中弹出
+----------------------------------------------------------------------------------------------------
+系统会在需要释放RAM时终止进程；系统不会直接终止Activity，而是会终止Activity所在的进程。进程状态取决于在进程
+中运行的Activity的状态。
+
+保存和恢复瞬时界面状态
+----------------------------------------------------------------------------------------------------
+当Activity因系统限制而被销毁时，如果需要在Activity恢复时界面状态不变，可以使用ViewModel、onSaveInstanceState()
+和/或本地存储来保留用户的瞬时界面状态。
+如果是原始数据类型或简单对象可以单独使用onSaveInstanceState()保存。
+
+实例状态
+----------------------------------------------------------------------------------------------------
+系统用于恢复先前状态的已保存数据成为实例状态。是存储在Bundle对象中的键值对集合。默认情况下，系统使用Bundle保存
+Activity布局中每个View对象的相关信息。如果Activity实例被销毁并重新创建，布局状态便会恢复为其先前的状态，且无
+需编写代码。
+为了使Android系统恢复Activity中的视图状态，每个视图必须具备有android:id属性提供的唯一id。
+Bundle不适合保存大量数据，因为需要在主线程进行序列化处理并占用系统进程内存。
+
+使用onSaveInstanceState()保存简单的界面状态
+----------------------------------------------------------------------------------------------------
+
+使用保存的实例状态恢复 Activity 界面状态
+----------------------------------------------------------------------------------------------------
+可以选择实现系统在onStart()方法之后调用的onRestoreInstanceState()，而不是onCreate()期间恢复状态。仅当有要
+恢复的已保存状态时，系统才会调用onRestoreInstanceState()，因此无需检查Bundle是否为null。
+
+在Activity之间导航
+----------------------------------------------------------------------------------------------------
+从一个Activity启动另一个Activity
+startActivity()，启动Activity不需要返回结果。
+startActivityForResult()，启动Activity需要返回结果。
+也可以隐式启动一个Activity：
+Intent intent = new Intent(Intent.ACTION_SEND);
+添加需要传递的数据
+intent.putExtra(Intent.EXTRA_EMAIL, recipientArray);
+startActivity(intent);
+
+协调Activity
+从一个Activity启动另一个Activity时的生命周期顺序：
+1.Activity A的onPause()方法执行。
+2.Activity B的onCreate()、onStart() 和 onResume() 方法依次执行（Activity B 现在具有用户焦点）。
+3.然后，如果 Activity A 在屏幕上不再显示，其 onStop() 方法执行。
