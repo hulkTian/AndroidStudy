@@ -1,0 +1,131 @@
+设计原理
+----------------------------------------------------------------------------------------------------
+Android 3.0中引入了Fragment，目的是为大屏幕上更加动态和灵活的界面设计提供支持。通过将 Activity 布局分成各个
+Fragment，可以在运行是修改Activity的外观，并在由Activity管理的返回栈中保留这些更改。
+每个Fragment都应该设计为可重复使用的模块化Activity组件。
+
+创建Fragment
+----------------------------------------------------------------------------------------------------
+要创建Fragment，必须创建Fragment的子类。Fragment类的的代码与Activity非常相识，生命周期方法也有关联。至少要
+实现一下生命方法：
+onCreate()
+系统会在创建Fragment时调用次方法。如果希望保留Fragment的基本组件，需要在实现中将其初始化。
+onCreateView()
+系统会在Fragment首次绘制其界面时调用此方法。需要在此方法中返回Fragment布局的根视图。
+onPause()
+系统会将此方法作为用户离开Fragment的第一个信号进行调用。可在此时确认当前用户会话借宿后任然后效的任何更改。
+
+添加界面
+----------------------------------------------------------------------------------------------------
+为Fragment提供布局，需要实现onCreateView() 回调方法，使用其提供的 LayoutInflater 对象加载自定义的布局，并
+将根View作为onCreateView() 方法的返回值。
+
+向Activity添加Fragment
+----------------------------------------------------------------------------------------------------
+有两种添加方式：
+1.在Activity布局文件内声明Fragment
+<fragment android:name="com.example.news.ArticleReaderFragment"
+          android:id="@+id/viewer"
+          android:layout_weight="2"
+          android:layout_width="0dp"
+          android:layout_height="match_parent" />
+android:name属性指定要在布局中进行实例化的Fragment类。
+创建Activity布局时，系统会将布局中指定的每个Fragment实例化，并未每个Fragment调用onCreateView()方法，以检索每个
+Fragment的布局。系统会直接插入Fragment返回的View，从而替代<fragment>元素。
+
+2.通过代码中添加Fragment到某个现有的ViewGroup
+FragmentManager fragmentManager = getSupportFragmentManager();
+FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+ExampleFragment fragment = new ExampleFragment();
+//第一个参数是ViewGroup,即Fragment需要放置的位置
+fragmentTransaction.add(R.id.fragment_container, fragment);
+fragmentTransaction.commit();
+
+管理Fragment
+----------------------------------------------------------------------------------------------------
+管理Fragment需要使用FragmentManager。要获取他，需要从Activity调用getSupportFragmentManager()。
+可使用FragmentManager执行的操作包括：
+1.通过findFragmentById()或findFragmentByTag()获取Activity中存在的Fragment。
+2.通过 popBackStack()（模拟用户发出的返回命令）使片段从返回栈中弹出。
+3.通过 addOnBackStackChangedListener() 注册侦听返回栈变化的侦听器。
+4.可以打开一个FragmentTransaction来执行某些事物，如添加和移除操作。
+
+执行片段事务
+----------------------------------------------------------------------------------------------------
+在 Activity 中使用片段的一大优点是，可以通过片段执行添加、移除、替换以及其他操作，从而响应用户交互。
+// Create new fragment and transaction
+Fragment newFragment = new ExampleFragment();
+FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack
+transaction.replace(R.id.fragment_container, newFragment);
+transaction.addToBackStack(null);
+
+// Commit the transaction
+transaction.commit();
+
+通过addToBackStack()可以将事务保存到返回栈，以便用户能够通过按返回按钮撤销事务并退到上一Fragment。可以项事务
+添加更多个更改（如又一个 add() 或 remove()），都会被当作单一事务添加到返回栈，并且返回按钮会将它们一并测撤销。
+添加更改的顺序不重要，但是必须最后调用commit()。
+
+如果没有在删除Fragment的事务调用addBackStack()，则事务提交时Fragment会被销毁，用户将无法回退到该Fragment，
+反之，用户回退时会将片段恢复。
+
+每个Fragment事务，都可通过提交前调用setTransition()来应用过渡动画。
+
+调用commit()不会立即执行事务，而是在Activity的界面线程可执行该操作时，再安排该事务在线程上运行。but,可以从
+界面线程调用 executePendingTransactions()，立即执行commit()提交的事务。
+
+一般只能在Activity处在“已恢复”状态之前调用commit()提交事务。如果在这之后可能会丢失状态。如果不关心状态是否
+丢失，可使用commitAllowStateLoss()提交.
+
+与 Activity 通信
+----------------------------------------------------------------------------------------------------
+Fragment可以通过getActivity() 访问 FragmentActivity 实例，并轻松执行在 Activity 布局中查找视图等任务：
+View listView = getActivity().findViewById(R.id.list);
+同样，Activity可以使用findFragmentById() 或 findFragmentByTag()，通过从 FragmentManager 获取对 Fragment
+的引用来调用片段中的方法。
+ExampleFragment fragment = (ExampleFragment) getSupportFragmentManager()
+.findFragmentById(R.id.example_fragment);
+
+创建 Activity 的事件回调
+----------------------------------------------------------------------------------------------------
+有时需要Fragment与Activity和/或Activity中的其他Fragment共享事件或数据。
+如需共享数据，可以使用ViewModel，创建共享的ViewModel。如需传播使用ViewModel无法处理的事件，可以改为在Fragment
+内部定义回调接口，并要求宿主Activity实现此接口
+
+向应用栏添加项目
+----------------------------------------------------------------------------------------------------
+Fragment可通过实现onCreateOptionsMenu()向 Activity 的选项菜单（并因此向应用栏）贡献菜单项。要想能够收到调用，
+必须在onCreate()期间调用setHasOptionsMenu()，以指示Fragment要想选项菜单添加菜单项，否则不会收到
+onCreateOptionMenu()的调用。
+还可通过调用registerForContextMenu()，在Fragment布局中注册一个视图来提供上下文菜单。
+Fragment所属的Activity会先收到菜单的on-item-selected回调，如果Activity不处理选定菜单项，系统会将事件传递给
+Fragment的回调。
+
+处理Fragment生命周期
+----------------------------------------------------------------------------------------------------
+Fragment的生命周期和Activity很相识。主要的周期方法有:
+onAttach(),onCreate(),onCreateView,onActivityCreate(),onStart(),onPause(),onStop(),onDestroyView(),
+onDestroy(),onDetach()。
+与Activity一样，可也可以使用onSaveInstanceState(Bundle)、ViewModel和持久化本地存储结合，在配置变更和进程
+终止后保留Fragment的界面状态。
+Activity和Fragment生命周期的显著差异是在各自返回栈中的存储方式。Activity是放入有系统管理的Activity返回栈中，
+Fragment是事务执行期间通过调用addToBackStack()显示请求保存实例时，系统才会将片段放入由宿主Activity管理的
+返回栈，并且是以事务为单位保存。
+
+与Activity的生命周期协调一致
+----------------------------------------------------------------------------------------------------
+宿主Activity的生命周期会直接影响Fragment的生命周期，Activity的每次生命周期回调都会引发每个Fragment的类似回
+调。不过Fragment有几个额外的生命周期回调，用于处理与Activity的唯一交互，从而执行构架和销毁片段等操作。
+onAttach()
+在Fragment与Activity关联时进行调用（Activity传递到此方法内）。
+onCreateView()
+创建Fragment的自定义视图。
+onActivityCreate()
+Activity的onCreate()方法已返回时调用。
+onDestroyView()
+在移除与Fragment关联的视图时调用。
+onDetach()
+在取消Fragment与Activity的关联时调用。

@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hulk.androidstudy.activities.ActivitiesHomeActivity
 import com.hulk.androidstudy.activities.ActivityLifeCycleCaseActivity
+import com.hulk.androidstudy.activities.ExampleFragmentActivity
+import com.hulk.androidstudy.activities.GetResultActivity
+import com.hulk.androidstudy.activities.gridtopager.SharedElementActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         rv_list.adapter = Adapter(this, listData, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    0 -> startActivity(ActivityLifeCycleCaseActivity::class.java)
+                    0 -> startActivity(GetResultActivity::class.java)
                 }
             }
         })

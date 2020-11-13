@@ -1,0 +1,26 @@
+深层链接和Android应用链接
+----------------------------------------------------------------------------------------------------
+深层链接：是指将用户直接转到应用的特定内容的网址。可以通过添加intent过滤器以继从传入的intent提取数据来设置。
+Android应用链接的好处：
+安全且具体：直接连接到应用自己的Http网址，会验证网域所有权。
+顺畅的用户体验：链接针对网站和应用中的相同内容使用单个Http网址，因此未安装应用的用户会直接转到网站。
+Android免安装应用支持：借助Android免安装应用，用户无需安装即可运行您的 Android 应用。
+通过Google搜索吸引用户：。。。
+
+创建指向应用内容的深层链接
+----------------------------------------------------------------------------------------------------
+    <activity
+         android:name=".activities.AppLinksActivity"
+         android:exported="true"
+         android:label="应用深层链接">
+         <intent-filter>
+             <action android:name="android.intent.action.VIEW" />
+
+             <category android:name="android.intent.category.DEFAULT" />
+             <category android:name="android.intent.category.BROWSABLE" />
+
+             <data
+                 android:host="links"
+                 android:scheme="study" />
+         </intent-filter>
+    </activity>

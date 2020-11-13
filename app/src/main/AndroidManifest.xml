@@ -18,6 +18,37 @@
         </activity>
         <activity android:name=".activities.ActivitiesHomeActivity" />
         <activity android:name=".activities.ActivityLifeCycleCaseActivity" />
+        <activity android:name=".activities.ExampleFragmentActivity" />
+        <activity android:name=".activities.GetResultActivity" />
+        <activity
+            android:name=".activities.OpenActivity"
+            android:exported="true"
+            android:icon="@drawable/bug_189903"
+            android:label="你好啊">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.AppLinksActivity"
+            android:exported="true"
+            android:label="应用深层链接">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="links"
+                    android:scheme="study" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.gridtopager.SharedElementActivity" />
         <activity android:name=".architecture_components.ArchitectureComponentsActivity" />
     </application>
 

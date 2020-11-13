@@ -1,0 +1,116 @@
+构建隐式 Intent
+----------------------------------------------------------------------------------------------------
+隐士Intent不会声明要启动的组件的类名称，而是声明要执行的操作。
+通常还包括与操作相关的数据，数据可能是Uri或其他几种数据类型之一，也可能该Intent根本不需要数据。
+例如，发起通话：
+    Uri number = Uri.parse("tel:5551234");
+    Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+需要Uri来指定电话号码
+查看地图：
+    //根据地址映射坐标
+    Uri location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California");
+    //或根据经纬度映射坐标
+    // Uri location = Uri.parse("geo:37.422219,-122.08364?z=14"); // z param is zoom level
+    Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+地址转换为Uri后作为数据传递到地图应用
+查看网页：
+    Uri webpage = Uri.parse("http://www.android.com");
+    Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+也可以使用putExtra()添加不同类型的数据。
+默认情况下，系统会根据Uri数据确定Intent需要的相应MIME类型。如果Intent没有Uri,可以使用setType()来指定与
+Intent 相关联的数类型。设置MIME类型可以进一步指定应接受Intent的Activity类型。
+发送带有附件的电子邮件：
+    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+    // intent没有Uri,指定MIME类型为“text/plain”
+    emailIntent.setType(HTTP.PLAIN_TEXT_TYPE);
+    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"jon@example.com"}); // 收件人
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Email subject");
+    emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message text");
+    emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("content://path/to/email/attachment"));
+创建日历活动：
+    Intent calendarIntent = new Intent(Intent.ACTION_INSERT, Events.CONTENT_URI);
+    Calendar beginTime = Calendar.getInstance();
+    beginTime.set(2012, 0, 19, 7, 30);
+    Calendar endTime = Calendar.getInstance();
+    endTime.set(2012, 0, 19, 10, 30);
+    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
+    calendarIntent.putExtra(Events.TITLE, "Ninja class");
+    calendarIntent.putExtra(Events.EVENT_LOCATION, "Secret dojo");
+
+验证是否存在可接收 Intent 的应用
+----------------------------------------------------------------------------------------------------
+尽管Android平台保证某些Intent会解析到内置应用，但始终需要验证步骤。
+    PackageManager packageManager = getPackageManager();
+    List<ResolveInfo> activities = packageManager.queryIntentActivities(intent,
+            PackageManager.MATCH_DEFAULT_ONLY);
+    boolean isIntentSafe = activities.size() > 0;
+如果isIntentSafe为true,则至少有一个应用将响应该Intent。如果为false，则没有应用可以处理该Intent。
+
+使用 Intent 启动 Activity
+----------------------------------------------------------------------------------------------------
+创建 Intent 并设置额外信息后，请调用 startActivity() 以将其发送到系统。
+
+显示应用选择器
+----------------------------------------------------------------------------------------------------
+    Intent intent = new Intent(Intent.ACTION_SEND);
+    intent.setType("text/plain");
+
+    // Always use string resources for UI text.
+    // This says something like "Share this photo with"
+    String title = getResources().getString(R.string.chooser_title);
+    // Create intent to show chooser
+    Intent chooser = Intent.createChooser(intent, title);
+
+    // Verify the intent will resolve to at least one activity
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(chooser);
+    }
+
+允许其他应用启动自己应用的Activity
+----------------------------------------------------------------------------------------------------
+如果想让其他应用启动Activity，需要在清单文件中对应的 <activity> 元素添加一个 <intent-filter> 元素。
+    <activity android:name="ShareActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.SEND"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:mimeType="text/plain"/>
+            <data android:mimeType="image/*"/>
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.SENDTO"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="sms" />
+            <data android:scheme="smsto" />
+            </intent-filter>
+    </activity>
+为正确定义Activity可以处理的Intent，添加的每个Intent过滤器在操作类型和Activity接受的数据方面都应该尽可能具体。
+如果Activity满足一下Intent对象条件的Intent过滤器，系统可能会向该Activity发送给定的Intent：
+1.操作：对要执行的操作命名的字符串。
+2.数据：与Intent关联的数据的说明
+3.类别：提供另外一种表征处理Intent的Activity的方法，通常与用户手势或Activity启动的位置有关
+每一个Intent只能指定一项操作和一个数据类型，但Activity可以配置多个 <intent-filter>来响应不同的操作和数据类型。
+
+处理Activity中的Intent
+----------------------------------------------------------------------------------------------------
+为了决定定义的Activity中执行那项操作，可以读取用于启动Activity的Intent。调用getIntent()检索启动Activity
+的Intent。通常应在早期调用如，onCreate()或onStart()中。
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.main)
+
+        val data: Uri? = intent?.data
+
+        // Figure out what to do based on the intent type
+        if (intent?.type?.startsWith("image/") == true) {
+            // Handle intents with image data ...
+        } else if (intent?.type == "text/plain") {
+            // Handle intents with text ...
+        }
+    }
+
+返回结果
+----------------------------------------------------------------------------------------------------
+如果想将结果返回，只需要调用setResult()来指定结果代码和Intent即可。注意最后调用finish()关闭并销毁被调用的
+Activity。结果代码必须是 RESULT_OK 。
