@@ -47,13 +47,8 @@ public class ProcessFiles {
     }
 
     public static void main(String[] args) {
-        new ProcessFiles(new ProcessFiles.Strategy() {
-
-            @Override
-            public void process(File file) {
-                System.out.println(file);
-            }
-        }, "java").start(new String[]{"app","app\\src\\main\\java\\com\\hulk\\androidstudy\\java_base\\io\\unit_1"});
+        new ProcessFiles(System.out::println, "java")
+                .start(new String[]{"app","app\\src\\main\\java\\com\\hulk\\androidstudy\\java_base\\io\\unit_1"});
     }
 
 }
