@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">AndroidStudy</string>
     <string name="chooser_title">Share this photo with</string>
+    <string name="static_proxy">静态代理</string>
+    <string name="dynamic_proxy">动态代理</string>
+    <string name="dynamic_proxy_jdk">JDK动态代理</string>
+    <string name="dynamic_proxy_cglib">CGLIB动态代理</string>
 </resources>

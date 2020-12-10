@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hulk.androidstudy">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,6 +52,13 @@
         </activity>
         <activity android:name=".activities.gridtopager.SharedElementActivity" />
         <activity android:name=".architecture_components.ArchitectureComponentsActivity" />
+        <activity android:name=".java_base.reflect.ReflectActivity" />
+        <activity android:name=".java_base.proxy.ProxyActivity" />
+        <activity android:name=".java_base.retrofit.RetrofitActivity" />
+        <activity android:name=".java_base.thread.ThreadActivity" />
+        <activity android:name=".java_base.rxjava.RXJavaActivity" />
+        <activity android:name=".java_base.io.JavaIOActivity" />
+
     </application>
 
 </manifest>

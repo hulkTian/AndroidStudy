@@ -11,19 +11,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hulk.androidstudy.activities.ActivitiesHomeActivity
-import com.hulk.androidstudy.activities.ActivityLifeCycleCaseActivity
-import com.hulk.androidstudy.activities.ExampleFragmentActivity
 import com.hulk.androidstudy.activities.GetResultActivity
-import com.hulk.androidstudy.activities.gridtopager.SharedElementActivity
+import com.hulk.androidstudy.java_base.io.JavaIOActivity
+import com.hulk.androidstudy.java_base.proxy.ProxyActivity
+import com.hulk.androidstudy.java_base.reflect.ReflectActivity
+import com.hulk.androidstudy.java_base.retrofit.RetrofitActivity
+import com.hulk.androidstudy.java_base.rxjava.RXJavaActivity
+import com.hulk.androidstudy.java_base.thread.ThreadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val listData = arrayListOf("Activities", "架构组件", "导航组件", "Intent和Intent过滤器",
-            "界面", "动画和过度", "图片和图形", "音频和视频", "服务", "后台任务", "权限", "应用数据和文件",
-            "用户数据和身份", "用户位置", "触摸和输入", "CameraX", "相机", "传感器", "连接性", "Renderscript",
-            "基于网络的内容", "Android App Bundle", "Google Play", "应用操作", "切片", "依赖注入",
-            "测试", "性能", "无障碍", "隐私设置", "安全性", "为数十亿用户打造产品", "为企业打造产品")
+    private val listData = arrayListOf(
+        "Activities", "架构组件", "导航组件", "Intent和Intent过滤器",
+        "界面", "动画和过度", "图片和图形", "音频和视频", "服务", "后台任务", "权限", "应用数据和文件",
+        "用户数据和身份", "用户位置", "触摸和输入", "CameraX", "相机", "传感器", "连接性", "Renderscript",
+        "基于网络的内容", "Android App Bundle", "Google Play", "应用操作", "切片", "依赖注入",
+        "测试", "性能", "无障碍", "隐私设置", "安全性", "为数十亿用户打造产品", "为企业打造产品", "反射",
+        "代理", "Retrofit","多线程","RXJava","Java I/O"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,17 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 when (position) {
                     0 -> startActivity(GetResultActivity::class.java)
+                    33 -> {
+                        val intent = Intent(this@MainActivity, ReflectActivity::class.java)
+                        intent.putExtra("name", "xiaoming")
+                        intent.putExtra("boy", true)
+                        startActivity(intent)
+                    }
+                    34 -> startActivity(ProxyActivity::class.java)
+                    35 -> startActivity(RetrofitActivity::class.java)
+                    36 -> startActivity(ThreadActivity::class.java)
+                    37 -> startActivity(RXJavaActivity::class.java)
+                    38 -> startActivity(JavaIOActivity::class.java)
                 }
             }
         })
@@ -43,8 +59,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, clazz))
     }
 
-    private class Adapter(val context: Context, val listData: ArrayList<String>, val listener: OnItemClickListener)
-        : RecyclerView.Adapter<MyViewHolder>() {
+    private class Adapter(
+        val context: Context,
+        val listData: ArrayList<String>,
+        val listener: OnItemClickListener
+    ) : RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             val view = LayoutInflater.from(context).inflate(R.layout.adapter_main, parent, false)

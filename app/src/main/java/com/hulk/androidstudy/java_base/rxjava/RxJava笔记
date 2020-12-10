@@ -1,0 +1,75 @@
+RxJava执行流程分析（不含线程切换）：
+1.第一步从Observable的create静态方法开始创建被观察者ObservableCreate，它是Observable的子类。接受一个自定义
+的source作为参数，这个自定义source是执行流程的关键节点。
+2.第二步链式调用其他操作符，例如map操作符，这时会把观察者ObservableCreate（引用对象名称为source）和定义的
+Function放入一个新的观察者ObservableMap中进行保存。如果有多个操作符步骤也是一样进行一层一层的装饰。这种模式叫做装饰模式。
+3.第三步调用订阅方法subscribe，它接受一个自定义的观察者作为参数。由于是链式调用，所以调用subscribe的应该是上一层
+的被观察者对象ObservableMap。而ObservableMap内部没有实现subscribe方法，所以最终是调用的Observable中的subscribe方法。
+4.第四步在subscribe方法中调用了subscribeActual(observer)方法，这个方法在Observable是抽象的，所以调用的是
+上一层ObservableMap实现的subscribeActual方法。subscribeActual的实现很简单，直接调用了
+source.subscribe(new MapObserver<T, U>(t, function))。这句代码是RxJava进行由下往上层层打包观察者的关键，
+几乎所有操作符对观察者的打包都是这种形式的。由第二步可以知道source是上一层被观察者的装饰对象，这样就实现了
+逐层调用。再看new MapObserver<T, U>(t, function)，它将观察者和ObservableMap的function进行了打包，方便之
+后对观察者和操作符实现方法的调用。所有定义的操作符都这样进行层层的打包。
+5.第五步所有操作符执行完后进入ObservableCreate的subscribe方法，此时发现ObservableCreate和ObservableMap一
+样没有实现subscribe方法，所以依然回到了Observable，此时和第四部一样，调用到ObservableCreate的
+subscribeActual(observer)。
+6.第六步在ObservableCreate的subscribeActual(observer)方法中，对观察者observer进行最后一次打包，将observer
+放入CreateEmitter中。然后立即调用observer的onSubscribe方法。最后调用source.subscribe(parent)，这个source
+就是开始我们在ObservableCreate的构造方法中传入的自定义source。传入的参数parent就是最后被包装的观察者
+CreateEmitter的实例。
+7.第七步要想流程继续执行必须在自定义source的subscribe方法中调用CreateEmitter的onNext(T t)方法
+（其他操作符会帮我们完成这个步骤）。onNext方法会接受一个参数t作为初始值。然后调用observer.onNext(t)，进入
+下一层被包装的观察者，即MapObserver的onNext(T t)方法。
+8.第八步进入MapObserver的onNext(T t)方法，先调用了map操作符的apply(t)对传入的初始值进行处理，然后再调用下
+一个操作符的onNext(T t)方法把处理后的值传入。经过多个操作符的处理最后将最终结果传到真实的观察者的onNext(T t)。
+
+
+RxJava的被观察者线程切换流程分析:
+1.RxJava的线程创建是通过静态工厂方法来实现的，最后都会拿到Scheduler DEFAULT，区别只是策略不同。例如
+Schedulers.io()中返回的是IoScheduler，它会创建一个适合IO操作的线程池。当这个Scheduler被创建后会作为参数传给
+subscribeOn(Scheduler scheduler)方法，这个方法会将被观察者放入指定策略的线程池执行。
+2.所有的被观察者装饰类都是调用的Observable中的subscribeOn方法，在subscribeOn中创建了一个ObservableSubscribeOn
+的实例，它也是一个被观察者的装饰类，保存了上一层的被观察者装饰对象source和定义的线程调度对象scheduler。
+3.在流程由下往上进行观察者的打包时，ObservableSubscribeOn的subscribeActual方法也会被调用。在subscribeActual
+中将观察者的打包对象observer又进行了打包 new SubscribeOnObserver<>(observer)，然后回调了观察者的订阅方法
+observer.onSubscribe(parent)，最后开始把打包的观察者parent放入任务中。new SubscribeTask(parent)，将观察
+者的打包对象parent放入SubscribeTask进行再次打包，这时它成为了一个Runnable。在调用
+scheduler.scheduleDirect(new SubscribeTask(parent))。
+4.进入scheduleDirect方法，再次调用重载的scheduleDirect方法，首先通过Worker createWorker()方法创建了一个
+Worker实例，这是一个抽象方法，它的具体实现在Scheduler的子类中，即谁调用谁实现，显然是IoScheduler。在IoScheduler
+的createWorker()方法中，可以看到它创建了一个EventLoopWorker的实例。然后又对任务进行了一次包装
+new DisposeTask(decoratedRun, w)，这次包装为任务增加了可中断的功能。接着调用了Worker实例的schedule方法。
+5.进入Worker实例的schedule方法，发现直接调用了threadWorker.scheduleActual(action, delayTime, unit, tasks)，
+这个threadWorker是在初始化Worker实例时同时初始化的，在threadWorker的构造方法会调用其父类NewThreadWorker的
+构造方法，在父类的构造方法中会初始化线程池executor = SchedulerPoolFactory.create(threadFactory)。
+threadWorker中没有实现scheduleActual，而是调用的它的父类NewThreadWorker的scheduleActual方法，在其中有对
+任务进行了一次包装，ScheduledRunnable，这是一个可以接受执行结果的Callable对象。最后开始将任务放入线程池执行。
+6.启动线程池有两种情况，如果需要理解执行就使用submit，这个启动方式可以获取执行后的结果。如果需要延迟执行可以
+调用schedule，它会将任务放入一个延迟队列中，延迟时间到后再执行。
+7.线程池启动完成后 ScheduledRunnable 作为被放入的任务，会根据指定的策略被执行。call方法会被调用，然后直接调用
+了run方法，run方法中直接调用了被保存的SubscribeTask的run方法，然后调用source.subscribe(parent)，此时我们定义
+的操作符开始在线程池中执行。
+
+总结：subscribeOn其实也可以当作一个操作符，它的功能就是将被观察者进行再次的装饰，然后放入线程池中执行，这样就
+可以保证只要不切换线程，所有的操作符都会在线程池中执行包括观察者。但是观察者的onSubscribe方法会在线程池启动
+前执行（步骤3），所以它会在开始使用RxJava的线程中执行。
+
+RxJava的观察者线程切换流程分析:
+1.定义观察者的执行线程需要使用observeOn(Scheduler scheduler)方法，它也是需要一个Scheduler作为参数，可以根据
+业务需求来加入不同的调度策略实例。现在以Android主线程为例，如果要将观察者执行在主线程中，需要传入
+Scheduler MAIN_THREAD。MAIN_THREAD是一个HandlerScheduler，它是Scheduler的实例，保存了一个主线程的Handler，
+ 用于线程切换。
+2.进入observeOn方法，它又调用了重载的observeOn方法，在重写的observeOn方法中实例化了一个ObservableObserveOn
+对象。和被观察者的流程一样，ObservableObserveOn也是一个装饰类，订阅开始后，会调用它的subscribeActual方法。
+3.subscribeActual中会判断当前的调度模式是不是TrampolineScheduler，即观察者在当前线程中执行，就不用切换线程。
+否则调用scheduler.createWorker()，创建Worker。此时会进入HandlerScheduler的createWorker()方法，实例化一个
+HandlerWorker对象。和被观察者的区别是不用创建线程池而是保存用于线程切换的Handler。
+4.Worker实例创建完成后，会开始由下往上对观察者进行打包new ObserveOnObserver<>(observer, w, delayError, bufferSize),
+再将打包的观察者对象作为参数传给上层装饰的被观察者对象source，调用subscribe方法。这样逐层打包后开始由上往下进行解包执行操作符。
+5.当执行到ObserveOnObserver的onNext(T t)方法时，会调用schedule()，然后会调用到HandlerWorker的schedule方法。
+worker.schedule(this)，它将ObserveOnObserver作为参数传入。
+6.在HandlerWorker的schedule方法中会对ObserveOnObserver进行再次的打包，new ScheduledRunnable(handler, run)。
+然后通过主线成的handler开始任务的执行，handler.sendMessageDelayed(message, unit.toMillis(delay))。
+7.首先会执行到ScheduledRunnable的run方法，然后直接执行ObserveOnObserver的run方法，此时就将观察者切换到了主线程中。
+开始执行观察者的回调方法。

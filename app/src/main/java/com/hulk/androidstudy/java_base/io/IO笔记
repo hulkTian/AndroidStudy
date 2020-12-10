@@ -1,0 +1,28 @@
+Java I/O系统
+1.File类
+1）File是一个使用类库工具，可以帮我们处理文件目录问题。它既能代表一个特定文件的名称，又能代表一个目录。
+2）File的list方法可以获取到File指向的文件集，它也可以接受一个FilenameFilter过滤器，来筛选出符合条件的文件
+集。这是一个策略模式的例子。FilenameFilter接口只有一个accept方法，它接受一个代表某个特定文件所在目录的File
+对像和特定文件名的String。通过正则表达式的matcher对象来判断这个文件名是否符合正则要求。
+总结：
+list():获取目录下的所有文件名称
+list(FilenameFilter filter)：获取使用筛选器后的目录下的所有文件名称
+listFiles()：获取目录下的所有文件对象
+listFiles(FilenameFilter filter):获取使用文件名筛选器后的目录下的所有文件对象
+listFiles(FileFilter filter)：获取使用文件筛选器后的目录下的所有文件对象
+3）
+
+2.输入和输出
+3.添加属性和有用的接口
+4.Reader和Writer
+5.RandomAccessFile
+6.I/O流的经典使用方式
+7.文件读写的使用工具
+8.标准I/O
+9.进程控制
+10.新I/O
+11.压缩
+12.对象序列化
+13.XML
+14.Preferences
+15.总结
