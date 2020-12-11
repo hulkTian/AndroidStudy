@@ -1,7 +1,40 @@
 package com.hulk.androidstudy.java_base.io;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /**
  * Created by tzh on 2020/12/11.
  */
 public class OSExecute {
+    public static void command(String command) {
+        boolean err = false;
+        try {
+            Process process = new ProcessBuilder(command.split(" ")).start();
+            BufferedReader results = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String s;
+            while ((s = results.readLine()) != null) {
+                System.out.println(s);
+            }
+            BufferedReader errors = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            while ((s = errors.readLine()) != null) {
+                System.err.println(s);
+                err = true;
+            }
+        } catch (Exception e) {
+            if (!command.startsWith("CMD /C"))
+                command("CMD /C " + command);
+            else
+                throw new RuntimeException(e);
+        }
+        if (err)
+            throw new OSExecuteException("Errors executing " + command);
+    }
+
+    static class OSExecuteDemo {
+
+        public static void main(String[] args) {
+            OSExecute.command("javap C:/Users/Administrator/Desktop/AndroidStudy/app/src/main/java/com/hulk/androidstudy/java_base/io/OSExecuteDemo");
+        }
+    }
 }
