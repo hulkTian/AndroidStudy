@@ -85,9 +85,22 @@ SequenceInputStream
 6.I/O流的经典使用方式
 1)缓冲输入文件：BufferedReader in = new BufferedReader(new FileReader(filename));
 如果要想打开一个文件用于字符输入，可以使用以String或File对象作为文件名的FileReader。
+2)从内存输入
+3)格式化内存输入，要读取格式化数据可以使用DataInputStream。
+4)基本的文件出，FileWriter对象可以向文件写入数据。
+5)存储和恢复数据，要保证读写时的流对应。
+6)读取随机访问文件
 
 7.文件读写的使用工具
+
 8.标准I/O
+1）按照标准I/O模型，Java提供了System.in、System.out和System.err.
+2）System.out已经被包装成了printStream对象，System.err同样也是PrintStream，但是System.in却是一个未被包装
+过的未经加工的InputStream。
+3）我们可以立即使用System.out和System.err，但是需要对System.in进行包装
+4）通常我们需要readLine()一次一行地读取输入，可以将System.in包装成BufferedReader来使用，这要求我们必须用InputStream
+把System.in转换成Reader。
+
 9.进程控制
 10.新I/O
 11.压缩

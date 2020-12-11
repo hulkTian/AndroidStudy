@@ -1,4 +1,4 @@
-package com.hulk.androidstudy.java_base.io.unit_1;
+package com.hulk.androidstudy.java_base.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -8,18 +8,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.io.SequenceInputStream;
 import java.io.StringBufferInputStream;
+import java.io.StringReader;
 
 /**
  * Created by tzh on 2020/12/10.
@@ -35,6 +35,11 @@ public class UseInputStreamAndOutputStream {
 //        UseInputStreamAndOutputStream.useDataInputStream();
 //        UseInputStreamAndOutputStream.useBufferedInputStream();
         UseInputStreamAndOutputStream.useRandomAccessFile();
+//        UseInputStreamAndOutputStream.readFileByFileReader("E:/read me.txt");
+//        UseInputStreamAndOutputStream.readMemoryInput("E:/read me.txt");
+//        UseInputStreamAndOutputStream.readByDataInputStream(
+//                "E:/UseInputStreamAndOutputStream.java");
+//        UseInputStreamAndOutputStream.writerFile();
     }
 
     private static void useByteArrayInputStream() throws IOException {
@@ -174,24 +179,111 @@ public class UseInputStreamAndOutputStream {
         System.out.println(s.toString());
     }
 
-    private static void useRandomAccessFile() throws IOException{
-        RandomAccessFile raf = new RandomAccessFile("E:/read.txt", "rwd");
+    /**
+     * RandomAccessFile除了实现DataInput和DataOutput接口外，有效地于I/O继承结构的其它部分实现了分离。
+     * 因此它不支持装饰，不能将其与InputStream及Outputstream子类的任何部分组合起来。
+     * 我们必须假定它已经被正确缓冲，因为我们不能为它添加这样的功能
+     * 第二个构造参数：我们可以指定以“只读”（r）或“读写”（rw）方式打开一个RandomAccessFile文件
+     */
+    private static void useRandomAccessFile() throws IOException {
+        RandomAccessFile rf = new RandomAccessFile("E:/a.txt", "rw");
+        for (int i = 0; i < 7; i++)
+            rf.writeDouble(i * 1.1414);
+        rf.writeUTF("The end of the file");
+        rf.close();
 
-        raf.seek(11);
-        raf.writeBoolean(true);
-        raf.writeDouble(1);
-        System.out.print(raf.getFilePointer());
+        RandomAccessFile raf = new RandomAccessFile("E:/a.txt", "rwd");
+        for (int i = 0; i < 7; i++)
+            System.out.println("value " + i + ": " + raf.readDouble());
+        System.out.println(raf.readUTF());
+        raf.close();
 
+        rf = new RandomAccessFile("E:/a.txt","rw");
+        rf.seek(5*8);
+        rf.writeDouble(47.0001);
+        rf.close();
+
+        raf = new RandomAccessFile("E:/a.txt", "rwd");
+        for (int i = 0; i < 7; i++)
+            System.out.println("value " + i + ": " + raf.readDouble());
+        System.out.println(raf.readUTF());
+        raf.close();
     }
 
-    private static void readFileByFileReader() throws IOException{
-        BufferedReader in = new BufferedReader(new FileReader("E:/read me.txt"));
+    /**
+     * 典型使用方式-缓冲输入文件
+     * 打开一个文件用于字符输入，可以使用FileInputStream读入
+     * 然后转成字符方式InputStreamReader
+     * 为了提高速度，对文件进行缓冲，可以将产生的应用传递给一个 BufferedReader
+     * 由于BufferedReader也提供readLine()方法，所以可以按行读取字符流
+     */
+    private static String readFileByFileReader(String fileName) throws IOException {
+        //先以流的方式读入文件，然后转成“GBK”格式的字符流
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(fileName),
+                "GBK");
+        //对文件进行缓冲
+        BufferedReader in = new BufferedReader(isr);
         String s;
         StringBuilder sb = new StringBuilder();
         while ((s = in.readLine()) != null) {
+            System.out.println(s);
             sb.append(s).append("\n");
-            in.close();
         }
-
+        in.close();
+        isr.close();
+        return sb.toString();
     }
+
+    /**
+     * 从内存输入
+     */
+    private static void readMemoryInput(String fileName) throws IOException {
+        StringReader in = new StringReader(readFileByFileReader(fileName));
+        int c;
+        while ((c = in.read()) != -1) {
+            System.out.print((char) c);
+        }
+    }
+
+    /**
+     * 格式化的内存输入
+     */
+    private static void readByDataInputStream(String fileName) {
+        try {
+            DataInputStream in = new DataInputStream(
+                    new ByteArrayInputStream(readFileByFileReader(fileName).getBytes()));
+            while (in.available() != 0)
+                System.out.print((char) in.readByte());
+        } catch (IOException e) {
+            System.err.println("End of stream");
+        }
+    }
+
+    private static void writerFile() throws IOException {
+        BufferedReader in = new BufferedReader(new StringReader(readFileByFileReader(
+                "E:/read me.txt")));
+        File file = new File("E:/a");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+//        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("E:/a/read.txt")));
+        //整个构造器可以简化流的写出操作，但实际上任然是在进行缓存，只是不同自己区实现。
+        PrintWriter out = new PrintWriter("E:/a/read.txt");
+//        int lineCount = 1;
+        String s;
+//        while ((s = in.readLine()) != null) {
+//            out.println(lineCount++ + ": " + s);
+//        }
+//        out.close();
+//        System.out.println(readFileByFileReader("E:/a/read.txt"));
+
+        //使用LineNumberReader进行行数记录
+        LineNumberReader lineNumberReader = new LineNumberReader(in);
+        while ((s = lineNumberReader.readLine()) != null) {
+            out.println(lineNumberReader.getLineNumber() + ": " + s);
+        }
+        out.close();
+        System.out.println(readFileByFileReader("E:/a/read.txt"));
+    }
+
 }
