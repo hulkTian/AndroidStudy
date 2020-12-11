@@ -10,13 +10,82 @@ list(FilenameFilter filter)：获取使用筛选器后的目录下的所有文�
 listFiles()：获取目录下的所有文件对象
 listFiles(FilenameFilter filter):获取使用文件名筛选器后的目录下的所有文件对象
 listFiles(FileFilter filter)：获取使用文件筛选器后的目录下的所有文件对象
-3）
+getCanonicalFile():获取文件的规范文件
+3）File类不仅仅可以代表文件或目录，也可以用File对象来创建目录或整个目录路径。还可以查看文件特性，检查某个File
+对象代表的时文件还是目录，并可以删除文件。下面展示一些方法：
+canRead():判断是否可读；
+canWrite():判断是否可写；
+getName():获取文件名称或目录名称
+getParent():获取父目录名称
+getPath():获取目录名称
+length():获取文件长度
+lastModified():目录名上次修改时间，时间戳
+isFile():判断File对象代表的是否是文件
+isDirectory():判断File对象代表的是否时目录
+renameTo(rname)：重命名
+exists():判断File对象代表的文件或目录是否存在
+delete():删除File对象代表的文件或目录
+mkdirs():创建File对象代表的文件或目录包如果父目录也不存在也创建父目录
+mkdirs():创建File对象代表的目录或文件
 
 2.输入和输出
+在JDK1.0中，所有的输入相关类都应从InputStream继承，所有与输出相关的类都应该从OutputStream继承。
+1）InputStream类型的作用是用来表示从不同数据元产生输入的类，这些数据源包括：字节数组，String对象，文件，“管道”，
+一个由其他种类的流组成的序列，其他数据源（网络连接等）。
+每种数据元都对应一个InputStream的子类，FilterInputStream是一个“装饰器”基类：
+ByteArrayInputStream：允许将内存的缓冲区当作InputStream使用，就是将接受的byte数组以流的概念进行包装，方便对
+数据的操作。
+StringBufferInputStream：将String转换成流。(废弃)
+FileInputStream：将文件转换为流。
+PipeInputStream：“管道”的数据转换为流
+SequenceInputStream：将两个或多个流对象转成一个流对象
+FilterInputStream：装饰器基类，有BufferInputStream、DataInputStream、PushbackInputStream子类。
+
 3.添加属性和有用的接口
+1)通过FilterInputStream从InputStream读取数据：
+DataInputStream：可以读取基本数据类型。
+BufferedInputStream：在内存中创建一个输入流的缓冲区
+LineNumberInputStream：跟踪输入流中的行号
+PushbackInputStream：可以将读到的最后一个字符回退，供编译器的扫描器使用。
+
 4.Reader和Writer
+Java 1.1对基本的I/O流类库进行了重大修改，增加了面向字符并兼容Unicode的Reader和Writer。
+1）数据的来源和去处：
+InputStream                       Reader 适配器：InputStreamReader，将IS转为Reader
+OutputStream                      Writer 适配器：OutputStreamWriter，将OS转为Writer
+FileInputStream                   FileReader
+FileOutputStream                  FileWriter
+StringBufferInputStream           StringReader
+ByteArrayInputStream              CharArrayReader
+ByteArrayOutputStream             CharArrayWriter
+PipedInputStream                  PipedReader
+PipedOutputStream                 PipedWriter
+两个不同的层次结构的接口非常相识
+2)更改流的行为，字符流对装饰器子类来修改“流”以满足需求的类的层次结构和字节流不完全相同。
+FilterInputStream                 FilterReader
+FilterOutputStream                FilterWriter(抽象类，没有子类)
+BufferedInputStream               BufferedReader(也有readLine())
+BufferedOutputStream              BufferedWriter
+DataInputStream                   使用DataInputStream（如果需要readLine，用BufferedReader）
+PrintStream                       PrintWriter
+LineNumberInputStream(弃用)       LineNumberReader
+StreamTokenizer                   StreamTokenizer(使用接受Reader的构造器)
+PushbackInputStream               PushbackReader
+3）未发生变化的类
+DataOutputStream
+File
+RandomAccessFile
+SequenceInputStream
+
 5.RandomAccessFile
+1)适用于由大小已知的记录组成的文件，可以使用seek()将记录从一处移动到另一处，然后读取或者修改记录。
+2）RandomAccessFile不是InputStream或OutputStream继承层次结构中的一部分。它直接从Object派生而来。
+3）本质上来说，RandomAccessFile的工作方式类似于把DataInputStream和DataOutputStream组合使用，还添加了一些方法。
+
 6.I/O流的经典使用方式
+1)缓冲输入文件：BufferedReader in = new BufferedReader(new FileReader(filename));
+如果要想打开一个文件用于字符输入，可以使用以String或File对象作为文件名的FileReader。
+
 7.文件读写的使用工具
 8.标准I/O
 9.进程控制
