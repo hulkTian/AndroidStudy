@@ -1,6 +1,7 @@
 package com.hulk.androidstudy.java_base.jvm;
 
 /**
+ * JVM参数学习
  * Created by tzh on 2021/1/5.
  */
 class Example {
