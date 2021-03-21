@@ -12,6 +12,7 @@ import com.hulk.webview.login.LoginEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class CommandLogin implements Command {
         EventBus.getDefault().register(this);
     }
 
+    @NotNull
     @Override
     public String name() {
         return "login";
