@@ -1,7 +1,6 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
@@ -10,13 +9,13 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.hulk.androidstudy"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -38,9 +37,8 @@ android {
 }
 
 dependencies {
-    annotationProcessor project(':compiler')
-    implementation project(':common')
-    implementation project(':webview')
-    compileOnly  rootProject.googleAutoServiceDependency
+    compileOnly rootProject.googleAutoServiceDependency
     annotationProcessor rootProject.googleAutoServiceDependency
+    implementation project(':common')
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }

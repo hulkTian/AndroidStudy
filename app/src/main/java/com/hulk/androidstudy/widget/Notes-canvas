@@ -1,0 +1,44 @@
+Canvas.drawXXX()和Paint基础
+1.drawColor(@ColorInt int color) 颜色填充
+  drawRGB(int r,int g,int b)
+  drawARGB(int a,int r,int g,int b)
+2.drawCircle(float centerX,float centerY,float radius,Paint paint) 画圆
+3.Paint画笔
+1）setColor(int color) 设置画笔颜色
+2）setStyle(Paint.Style style) 设置画笔模式 STROKE 划线 FILL 填充 FILL_AND_STROKE 填充和线
+3）setStrokeWidth(float width) 设置线条宽度 STROKE 和 FLAG_FILL_AND_STROKE 模式下有效
+4）setAntialias(boolean aa) 设置是否开启抗锯齿
+5）setStrokeCap(cap) 设置线条端点的形状，也可设置点的形状
+4.drawRect(float left,float top,float right,float bottom,Paint paint) 画矩形
+  drawRect(RectF rect,Paint paint)
+  drawRect(Rect rect,Paint paint)
+5.drawPoint(float x,float y,Paint paint) 画点 x,y点的中心坐标，
+  setStrokeWidth 设置点的大小
+  setStrokeCap(cap) 设置点的形状 ROUND 圆形点 SQUARE 方头  BUTT 平头
+  drawPoints(float[] pts,int offset,int count,Paint paint)
+  批量画点，pts 点坐标，两个一对； offset 开始坐标位置；count 画点数量
+  drawPoints(float[] pts,Paint paint)批量画点
+6.drawOval(float left,float top,float right,float bottom,Paint paint) 画椭圆
+7.drawLine( startX: float,startY: float,stopX: float,stopY: float,) 画线
+8.drawRoundRect(left: float,top: float,right: float,bottom: float,rx: float,ry: float,) 圆角矩形
+9.drawArc(left: float,top: float,right: float,bottom: float,startAngle: float,sweepAngle: float,) 画扇形或弧线
+10.drawPath():
+1)addXxx()添加子视图 addCircle,addOval,addRect,addRoundRect,addPath
+2)XxxTo()画线：lineTo(float x,float y)参数是绝对坐标，有当前位置向（x,y）画线
+rLineTo(float x,float y)参数是相对坐标，由当前位置画（x,y）偏移量的线
+quadTo(float x1,float y1,float x2,float y2)画二次贝塞尔曲线，（x1,y1）控制点坐标，（x2,y2）终点坐标
+rQuadTo(float x1,float y1,float x2,float y2)
+cubicTo()和rCubicTo()三次贝塞尔曲线
+moveTo()和rMoveTo()移动到目标位置，作为起点
+arcTo(float left,float top,float right,float bottom,float startAngle,float sweepAngle,boolean forceMoveTo)
+forceMoveTo = true 画笔会移到指定位置开始画，false 画笔会从当前位置画线移到指定位置
+addArc只是arcTo的简版，forceMoveTo=true
+3)close()封闭当前子图形
+4）Path.setFillType(Path.FillType ft)设置填充方式:
+EVEN_ODD，奇偶原则，平面中的任意点射出一条线，线和图相交的次数是奇数，则点在图形内部，偶数则点在图形外部（相交部分不填充）
+WINDING，非零环绕数原则，图形需要有绘制方向，平面任一点射出一条西安，线和图相交的位置是顺时针方向加1，逆时针
+方向减1，结果为0则点在图形外部，否则在内部（同向全填充，不同向相交部分不填充）
+INVERSE_EVEN_ODD，与EVEN_ODD相反
+INVERSE_WINDING，与WINDING相反
+11.drawBitmap(Bitmap bitmap,float left,float top,float right,float bottom,Paint paint)画Bitmap
+

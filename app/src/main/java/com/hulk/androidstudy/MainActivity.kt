@@ -18,7 +18,12 @@ import com.hulk.androidstudy.java_base.reflect.ReflectActivity
 import com.hulk.androidstudy.java_base.retrofit.RetrofitActivity
 import com.hulk.androidstudy.java_base.rxjava.RXJavaActivity
 import com.hulk.androidstudy.java_base.thread.ThreadActivity
+import com.hulk.androidstudy.widget.WidgetActivity
+import com.hulk.common.service.IWebViewService
+import com.hulk.common.unit.ServiceLoaderUnit
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private val listData = arrayListOf(
@@ -27,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         "用户数据和身份", "用户位置", "触摸和输入", "CameraX", "相机", "传感器", "连接性", "Renderscript",
         "基于网络的内容", "Android App Bundle", "Google Play", "应用操作", "切片", "依赖注入",
         "测试", "性能", "无障碍", "隐私设置", "安全性", "为数十亿用户打造产品", "为企业打造产品", "反射",
-        "代理", "Retrofit","多线程","RXJava","Java I/O"
+        "代理", "Retrofit", "多线程", "RXJava", "Java I/O", "自定义View", "webView框架"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +55,12 @@ class MainActivity : AppCompatActivity() {
                     36 -> startActivity(ThreadActivity::class.java)
                     37 -> startActivity(RXJavaActivity::class.java)
                     38 -> startActivity(JavaIOActivity::class.java)
+                    39 -> startActivity(WidgetActivity::class.java)
+                    40 -> {
+                        val iWebViewService: IWebViewService? =
+                            ServiceLoaderUnit.load(IWebViewService::class.java)
+                        iWebViewService?.startDemoHtml(this@MainActivity)
+                    }
                 }
             }
         })
@@ -59,10 +70,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, clazz))
     }
 
-    private class Adapter(
-        val context: Context,
-        val listData: ArrayList<String>,
-        val listener: OnItemClickListener
+    class Adapter(
+        private val context: Context,
+        private val listData: ArrayList<String>,
+        private val listener: OnItemClickListener
     ) : RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -83,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvMain: TextView = itemView.findViewById(R.id.tv_main)
     }
 
