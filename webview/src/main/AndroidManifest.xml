@@ -11,6 +11,7 @@
         <activity android:name=".MainProcessTestActivityA"/>
         <activity android:name=".MainProcessTestActivityB"/>
         <service android:name=".mian_process.MainProcessCommandService"/>
+        <activity android:name=".login.LoginActivity"/>
     </application>
 
 </manifest>
