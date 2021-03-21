@@ -110,4 +110,5 @@ public class TextFile extends ArrayList<String> {
             System.out.println(character + ": " + map.get(character));
         }
     }
+
 }

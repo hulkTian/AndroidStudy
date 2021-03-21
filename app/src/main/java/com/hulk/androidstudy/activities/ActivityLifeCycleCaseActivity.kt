@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.hulk.androidstudy.R
 
 /**
+ * Activity的生命周期案例
  * Created by tzh on 2020/11/9.
  */
 class ActivityLifeCycleCaseActivity:FragmentActivity() {
