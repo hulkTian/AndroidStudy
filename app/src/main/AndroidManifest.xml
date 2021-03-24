@@ -61,6 +61,7 @@
         <activity android:name=".java_base.io.JavaIOActivity" />
         <activity android:name=".widget.WidgetActivity" />
         <activity android:name=".widget.MyTextViewActivity" />
+        <activity android:name=".widget.GiveLikeViewActivity" />
     </application>
 
 </manifest>

@@ -10,7 +10,7 @@ import com.hulk.androidstudy.R
 import kotlinx.android.synthetic.main.activity_widget.*
 
 class WidgetActivity : Activity() {
-    private val listData = arrayListOf("绘制文字")
+    private val listData = arrayListOf("绘制文字", "点赞控件")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,13 +18,14 @@ class WidgetActivity : Activity() {
         rv_list.layoutManager = LinearLayoutManager(this)
         rv_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         rv_list.adapter =
-            MainActivity.Adapter(this, listData, object : MainActivity.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    when (position) {
-                        0 -> startActivity(MyTextViewActivity::class.java)
+                MainActivity.Adapter(this, listData, object : MainActivity.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        when (position) {
+                            0 -> startActivity(MyTextViewActivity::class.java)
+                            1 -> startActivity(GiveLikeViewActivity::class.java)
+                        }
                     }
-                }
-            })
+                })
     }
 
     private fun startActivity(clazz: Class<*>) {
