@@ -22,7 +22,6 @@ import com.hulk.androidstudy.widget.WidgetActivity
 import com.hulk.common.service.IWebViewService
 import com.hulk.common.unit.ServiceLoaderUnit
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
