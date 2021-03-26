@@ -20,6 +20,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onResume() {
+
         super.onResume()
         //Fragment 的添加方式必须为BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT时才有效
         if (isFirstResume == 0 && !isHidden) {
