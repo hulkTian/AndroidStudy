@@ -118,7 +118,7 @@ class GiveLikeView : View {
         animatorForTextAdd.addUpdateListener {
             if (isLiked) {
                 currentBaselineOfUp = it.animatedValue as Float
-                currentBaselineOfDown = (1 - it.animatedFraction) * baselineOfDown
+                currentBaselineOfDown = currentBaselineOfUp + (baseline - baselineOfUp)
                 textAlphaOfDown = (it.animatedFraction * 255).toInt()
                 textAlphaOfUp = ((1 - it.animatedFraction) * 255).toInt()
             }
@@ -128,13 +128,13 @@ class GiveLikeView : View {
         animatorForTextSub.addUpdateListener {
             if (!isLiked) {
                 currentBaselineOfDown = it.animatedValue as Float
-                currentBaselineOfUp = (1 - it.animatedFraction) * baselineOfUp
+                currentBaselineOfUp = currentBaselineOfDown - (baselineOfDown - baseline)
                 textAlphaOfUp = (it.animatedFraction * 255).toInt()
                 textAlphaOfDown = ((1 - it.animatedFraction) * 255).toInt()
             }
         }
 
-        val animatorSet = AnimatorSet()
+        animatorSet = AnimatorSet()
         animatorSet.playTogether(animatorForScale, animatorForRadius, animatorForAlpha,
                 animatorForTextAdd, animatorForTextSub)
     }
