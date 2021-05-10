@@ -62,6 +62,7 @@
         <activity android:name=".widget.WidgetActivity" />
         <activity android:name=".widget.MyTextViewActivity" />
         <activity android:name=".widget.GiveLikeViewActivity" />
+        <activity android:name=".widget.SeekBarActivity" />
     </application>
 
 </manifest>

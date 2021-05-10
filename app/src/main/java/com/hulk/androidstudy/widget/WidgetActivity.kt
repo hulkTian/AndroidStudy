@@ -10,7 +10,7 @@ import com.hulk.androidstudy.R
 import kotlinx.android.synthetic.main.activity_widget.*
 
 class WidgetActivity : Activity() {
-    private val listData = arrayListOf("绘制文字", "点赞控件")
+    private val listData = arrayListOf("绘制文字", "点赞控件", "SeekBar")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +23,7 @@ class WidgetActivity : Activity() {
                         when (position) {
                             0 -> startActivity(MyTextViewActivity::class.java)
                             1 -> startActivity(GiveLikeViewActivity::class.java)
+                            2 -> startActivity(SeekBarActivity::class.java)
                         }
                     }
                 })

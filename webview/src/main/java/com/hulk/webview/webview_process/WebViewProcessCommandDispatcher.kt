@@ -26,7 +26,7 @@ class WebViewProcessCommandDispatcher : ServiceConnection {
      */
     fun initAidlConnection() {
         val intent = Intent(BaseApplication.application, MainProcessCommandService::class.java)
-        BaseApplication.application.bindService(intent, this, Context.BIND_AUTO_CREATE);
+        BaseApplication.application.bindService(intent, this, Context.BIND_AUTO_CREATE)
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
