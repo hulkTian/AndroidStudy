@@ -18,6 +18,7 @@ import com.hulk.androidstudy.java_base.reflect.ReflectActivity
 import com.hulk.androidstudy.java_base.retrofit.RetrofitActivity
 import com.hulk.androidstudy.java_base.rxjava.RXJavaActivity
 import com.hulk.androidstudy.java_base.thread.ThreadActivity
+import com.hulk.androidstudy.pictures_graphics.PicturesAndGraphicsActivity
 import com.hulk.androidstudy.widget.WidgetActivity
 import com.hulk.common.service.IWebViewService
 import com.hulk.common.unit.ServiceLoaderUnit
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 when (position) {
                     0 -> startActivity(GetResultActivity::class.java)
+                    6 -> startActivity(PicturesAndGraphicsActivity::class.java)
                     33 -> {
                         val intent = Intent(this@MainActivity, ReflectActivity::class.java)
                         intent.putExtra("name", "xiaoming")

@@ -52,6 +52,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.gridtopager.SharedElementActivity" />
+        <activity android:name=".pictures_graphics.PicturesAndGraphicsActivity"/>
         <activity android:name=".architecture_components.ArchitectureComponentsActivity" />
         <activity android:name=".java_base.reflect.ReflectActivity" />
         <activity android:name=".java_base.proxy.ProxyActivity" />
