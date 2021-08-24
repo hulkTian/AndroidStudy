@@ -127,8 +127,6 @@ public class CustomLayout extends ViewGroup {
                 mTmpContainerRect.top = parentTop + lp.topMargin;
                 mTmpContainerRect.bottom = parentBottom - lp.bottomMargin;
 
-                // Use the child's gravity and size to determine its final
-                // frame within its container.
                 Gravity.apply(lp.gravity, width, height, mTmpContainerRect, mTmpChildRect);
 
                 child.layout(mTmpChildRect.left, mTmpChildRect.top,
