@@ -131,7 +131,6 @@ public class CustomLayout extends ViewGroup {
                 // frame within its container.
                 Gravity.apply(lp.gravity, width, height, mTmpContainerRect, mTmpChildRect);
 
-                // Place the child.
                 child.layout(mTmpChildRect.left, mTmpChildRect.top,
                         mTmpChildRect.right, mTmpChildRect.bottom);
             }
