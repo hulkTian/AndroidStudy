@@ -71,6 +71,9 @@ public class UseAQS {
                     //设置被锁线程
                     setExclusiveOwnerThread(Thread.currentThread());
                     return true;
+                } else if (getExclusiveOwnerThread() == Thread.currentThread()) {
+                    setState(getState() + 1);
+                    return true;
                 }
                 return false;
             }
@@ -99,6 +102,7 @@ public class UseAQS {
     public static void main(String[] args) throws InterruptedException {
         Mutex mutex = new Mutex();
         UseAQS useAQS = new UseAQS();
+        //创建20000个线程对count变量进行++计算并通过mutex锁对线程进行同步，保证输出结果为20000
         for (int i = 0; i < 20000; i++) {
             new Thread(() -> {
                 useAQS.count(mutex);
@@ -108,6 +112,9 @@ public class UseAQS {
 
     private int count;
 
+    /**
+     * 通过锁控制方法的同步访问，如果没有成功获得锁就不执行操作
+     */
     private void count(Mutex mutex) {
         mutex.lock();
         if (mutex.isLocked()) {

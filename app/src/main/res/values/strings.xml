@@ -5,4 +5,13 @@
     <string name="dynamic_proxy">动态代理</string>
     <string name="dynamic_proxy_jdk">JDK动态代理</string>
     <string name="dynamic_proxy_cglib">CGLIB动态代理</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

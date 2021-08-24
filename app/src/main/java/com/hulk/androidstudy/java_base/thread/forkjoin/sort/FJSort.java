@@ -41,9 +41,10 @@ class FJSort {
     public static void main(String[] args) {
         ForkJoinPool pool = new ForkJoinPool();
         int[] src = MakeArray.makeArray();
+        System.out.println(Arrays.toString(src));
         SumTask innerFind = new SumTask(src);
         long start = System.currentTimeMillis();
-        pool.invoke(innerFind);
+        System.out.println(Arrays.toString(pool.invoke(innerFind)));
         System.out.println("spend time：" + (System.currentTimeMillis() - start) + "ms");
     }
 }

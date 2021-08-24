@@ -1,23 +1,22 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '1.4.21'
+        kotlin_version = '1.5.10'
         compileSdkVersion = 30
-        buildToolsVersion = "30.0.2"
+        buildToolsVersion = "30.0.3"
         minSdkVersion = 21
         targetSdkVersion = 30
         androidxVersion = '1.2.0'
         googleAutoServiceDependency = 'com.google.auto.service:auto-service:1.0-rc7'
-        rootProject.kotlin_version = '1.4.21'
+        rootProject.kotlin_version = '1.5.10'
     }
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url "https://jitpack.io" }
         google()
-        jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath 'com.android.tools.build:gradle:7.0.0-beta04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -27,9 +26,9 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         google()
-        jcenter()
     }
 }
 

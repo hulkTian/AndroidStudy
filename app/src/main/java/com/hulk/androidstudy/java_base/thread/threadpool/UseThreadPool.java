@@ -52,24 +52,25 @@ class UseThreadPool {
         }
 
         @Override
-        public String call() {
+        public String call() throws InterruptedException {
+            Thread.sleep(r.nextInt(1000) * 5);
             System.out.println(Thread.currentThread().getName() + " process the task: " + taskName);
             return Thread.currentThread().getName() + ":" + r.nextInt(100) * 5;
         }
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
-        ExecutorService pool = new ThreadPoolExecutor(2, 4,
+        ExecutorService pool = new ThreadPoolExecutor(2, 16,
                 3, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10),
                 new ThreadPoolExecutor.DiscardOldestPolicy());
         for (int i = 0; i < 6; i++) {
             Worker worker = new Worker("worker_" + i);
             pool.execute(worker);
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 100; i++) {
             CallWorker callWorker = new CallWorker("worker_" + i);
             Future<String> result = pool.submit(callWorker);
-            System.out.println(result.get(1,TimeUnit.SECONDS));
+//            System.out.println(result.get(10,TimeUnit.SECONDS));
         }
         pool.shutdown();
     }

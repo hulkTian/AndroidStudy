@@ -17,18 +17,19 @@ class InsertionSort {
         for (int i = 0; i < array.length - 1; i++) {
             int preIndex = i;
             currentValue = array[preIndex + 1];
-            while (preIndex > 0 && currentValue < array[preIndex]) {
+            while (preIndex >= 0 && currentValue < array[preIndex]) {
                 array[preIndex + 1] = array[preIndex];
+                array[preIndex] = currentValue;
                 preIndex--;
             }
-            array[preIndex + 1] = array[preIndex];
         }
         return array;
     }
 
     public static void main(String[] args) {
         System.out.println("============================================");
-        int[] array = InsertionSort.sort(MakeArray.makeArray());
+        int[] array = MakeArray.makeArray();
         System.out.println(Arrays.toString(array));
+        System.out.println(Arrays.toString(InsertionSort.sort(array)));
     }
 }

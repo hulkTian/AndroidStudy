@@ -7,20 +7,23 @@ import java.util.concurrent.CyclicBarrier;
 
 /**
  * 演示CyclicBarrier用法，共5个线程，他们全部完成工作后，交出自己结果，再被统一
- * 释放去做自己的事情，而交处的结果被另外的线程拿来拼接字符串
+ * 释放去做自己的事情，而交出的结果被另外的线程拿来拼接字符串
  * Created by tzh on 2020/11/25.
  */
 public class UseCyclicBarrier {
     private static CyclicBarrier barrier;
     //存放子线程工作结果的容器
-    private static ConcurrentHashMap<String, Long> resultMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Long> resultMap = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        barrier = new CyclicBarrier(5, new CollectThread());
-        for (int i = 0; i <= 4; i++) {
+//        barrier = new CyclicBarrier(5, new CollectThread());
+        barrier = new CyclicBarrier(5);
+//        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i < 4; i++) {
             Thread thread = new Thread(new SubThread());
             thread.start();
         }
+        new Thread(new CollectThread()).start();
     }
 
     private static class CollectThread implements Runnable {
@@ -28,10 +31,15 @@ public class UseCyclicBarrier {
         public void run() {
             StringBuilder result = new StringBuilder();
             for (Map.Entry<String, Long> workResult : resultMap.entrySet()) {
-                result.append("[" + workResult.getValue() + "]");
+                result.append("[").append(workResult.getValue()).append("]");
             }
             System.out.println(" the result = " + result);
             System.out.println("do other business.......");
+            try {
+                barrier.await();
+            } catch (BrokenBarrierException | InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

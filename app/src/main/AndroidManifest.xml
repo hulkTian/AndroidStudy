@@ -12,6 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStudy">
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:label="@string/title_activity_login" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +34,7 @@
             android:label="你好啊">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
@@ -52,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.gridtopager.SharedElementActivity" />
-        <activity android:name=".pictures_graphics.PicturesAndGraphicsActivity"/>
+        <activity android:name=".pictures_graphics.PicturesAndGraphicsActivity" />
         <activity android:name=".architecture_components.ArchitectureComponentsActivity" />
         <activity android:name=".java_base.reflect.ReflectActivity" />
         <activity android:name=".java_base.proxy.ProxyActivity" />
@@ -64,6 +69,8 @@
         <activity android:name=".widget.MyTextViewActivity" />
         <activity android:name=".widget.GiveLikeViewActivity" />
         <activity android:name=".widget.SeekBarActivity" />
+        <activity android:name=".widget.CustomLayoutActivity" />
+        <activity android:name=".widget.FlowLayoutActivity" />
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import java.util.concurrent.Semaphore;
  * Created by tzh on 2020/11/25.
  */
 public class DBPoolSemaphore {
-    private final static int POOL_SIZE = 10;
+    private final static int POOL_SIZE = 2;
     //两个指示器，分别标识池子还有可用连接和已用连接
     private final Semaphore useful = new Semaphore(POOL_SIZE, true);
     private final Semaphore useless = new Semaphore(0, true);
@@ -68,7 +68,7 @@ public class DBPoolSemaphore {
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i< 50; i++) {
+        for (int i = 0; i< 3; i++) {
             Thread thread = new BusiThread();
             thread.start();
         }

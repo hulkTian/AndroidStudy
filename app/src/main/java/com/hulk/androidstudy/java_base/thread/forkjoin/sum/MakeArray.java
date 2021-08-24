@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by tzh on 2020/11/24.
  */
 public class MakeArray {
-    public static final int ARRAY_LENGTH = 40000000;
+    public static final int ARRAY_LENGTH = 10;
     public final static int THRESHOLD = 47;
 
     public static int[] makeArray() {

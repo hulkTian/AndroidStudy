@@ -10,7 +10,7 @@ import com.hulk.androidstudy.R
 import kotlinx.android.synthetic.main.activity_widget.*
 
 class WidgetActivity : Activity() {
-    private val listData = arrayListOf("绘制文字", "点赞控件", "SeekBar")
+    private val listData = arrayListOf("绘制文字", "点赞控件", "SeekBar", "自定义ViewGroup", "FlowLayout")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +24,8 @@ class WidgetActivity : Activity() {
                             0 -> startActivity(MyTextViewActivity::class.java)
                             1 -> startActivity(GiveLikeViewActivity::class.java)
                             2 -> startActivity(SeekBarActivity::class.java)
+                            3 -> startActivity(CustomLayoutActivity::class.java)
+                            4 -> startActivity(FlowLayoutActivity::class.java)
                         }
                     }
                 })
