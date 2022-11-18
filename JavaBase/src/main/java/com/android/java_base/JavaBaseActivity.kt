@@ -1,48 +1,38 @@
-package com.hulk.androidstudy
+package com.android.java_base
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.java_base.JavaBaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.collections.ArrayList
+import com.android.java_base.databinding.ActivityJavaBaseBinding
 
-class MainActivity : AppCompatActivity() {
+class JavaBaseActivity: AppCompatActivity() {
+    private lateinit var mBinding : ActivityJavaBaseBinding
     private val listData = arrayListOf(
-        "Java基础",
-        "Java并发编程",
-        "Java网络编程",
-        "Kotlin语言",
-        "算法与数据结构",
-        "java/android虚拟机",
-        "Android View框架体系",
-        "Android View框架体系",
-        "Android Framework",
-        "Android 性能优化",
-        "Android 开源框架",
-        "Android Jetpack",
-        "Android NDK",
-        "webView框架",
-        "Gradle"
+        "Java 容器",
+        "Java 泛型",
+        "Java 注解",
+        "Java 反射",
+        "Java I/O",
+        "Java 序列化",
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        rv_list.layoutManager = LinearLayoutManager(this)
-        rv_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        rv_list.adapter = Adapter(this, listData, object : OnItemClickListener {
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_java_base)
+        mBinding.rvList.layoutManager = LinearLayoutManager(this)
+        mBinding.rvList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        mBinding.rvList.adapter = Adapter(this, listData, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
-                    0-> startActivity(JavaBaseActivity::class.java)
                     /*0 -> startActivity(GetResultActivity::class.java)
                     6 -> startActivity(PicturesAndGraphicsActivity::class.java)
                     33 -> {
@@ -102,5 +92,4 @@ class MainActivity : AppCompatActivity() {
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
-
 }

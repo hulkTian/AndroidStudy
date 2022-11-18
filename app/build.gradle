@@ -50,6 +50,7 @@ dependencies {
     annotationProcessor project(':compiler')
     implementation project(':common')
     implementation project(':webview')
+    implementation project(':JavaBase')
     compileOnly  rootProject.googleAutoServiceDependency
     annotationProcessor rootProject.googleAutoServiceDependency
 }
