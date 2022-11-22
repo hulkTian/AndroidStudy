@@ -4,21 +4,23 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import com.hulk.androidstudy.R
+import com.hulk.androidstudy.databinding.ActivityRxJavaBinding
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import kotlinx.android.synthetic.main.activity_rx_java.*
 
 /**
  * Created by tzh on 2020/12/4.
  */
 class RXJavaActivity : Activity(), View.OnClickListener {
+    private lateinit var mBinding:ActivityRxJavaBinding
     private val useRxJava = UseRxJava()
     private val TAG = "RXJavaActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rx_java)
-        bt_test_1.setOnClickListener(this)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_rx_java)
+        mBinding.btTest1.setOnClickListener(this)
 //        RxView.clicks(bt_test_1)
 //            .throttleFirst(2000, TimeUnit.MILLISECONDS)
 //            .subscribe(object : Observer<Any> {

@@ -1,15 +1,17 @@
 package com.hulk.androidstudy.activities
 
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import com.hulk.androidstudy.R
-import kotlinx.android.synthetic.main.activity_activities_home.*
+import com.hulk.androidstudy.databinding.ActivityActivitiesHomeBinding
 
 /**
  * 核心主题-Activity
  * Created by tzh on 2020/11/6.
  */
 class ActivitiesHomeActivity : FragmentActivity() {
+    private lateinit var mBinding : ActivityActivitiesHomeBinding
     private var gameState: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +21,7 @@ class ActivitiesHomeActivity : FragmentActivity() {
             gameState = savedInstanceState.getString("GAME_STATE_KEY", "")
         }
         //添加布局的方式，除了定义XML文件外，还可实例一个View，并将View插入到ViewGroup中
-        setContentView(R.layout.activity_activities_home)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_activities_home)
     }
 
     /**
@@ -28,7 +30,7 @@ class ActivitiesHomeActivity : FragmentActivity() {
      */
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        text_view.text = savedInstanceState.getString("TEXT_VIEW_KEY")
+        mBinding.textView.text = savedInstanceState.getString("TEXT_VIEW_KEY")
     }
 
     /**
@@ -36,7 +38,7 @@ class ActivitiesHomeActivity : FragmentActivity() {
      */
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("GAME_STATE_KEY", gameState + 1)
-        outState.putString("TEXT_VIEW_KEY", text_view.text as String? + 1)
+        outState.putString("TEXT_VIEW_KEY", mBinding.textView.text as String? + 1)
         super.onSaveInstanceState(outState)
     }
 

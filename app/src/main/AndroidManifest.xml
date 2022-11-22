@@ -26,7 +26,6 @@
         <activity android:name=".activities.ActivitiesHomeActivity" />
         <activity android:name=".activities.ActivityLifeCycleCaseActivity" />
         <activity android:name=".activities.ExampleFragmentActivity" />
-        <activity android:name=".activities.GetResultActivity" />
         <activity
             android:name=".activities.OpenActivity"
             android:exported="true"

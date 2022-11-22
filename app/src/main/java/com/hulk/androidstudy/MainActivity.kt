@@ -8,14 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.java_base.JavaBaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.android.javabase.activity.JavaBaseActivity
+import com.hulk.androidstudy.databinding.ActivityMainBinding
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mBinding :ActivityMainBinding
     private val listData = arrayListOf(
         "Java基础",
         "Java并发编程",
@@ -36,10 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        rv_list.layoutManager = LinearLayoutManager(this)
-        rv_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        rv_list.adapter = Adapter(this, listData, object : OnItemClickListener {
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mBinding.rvList.layoutManager = LinearLayoutManager(this)
+        mBinding.rvList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        mBinding.rvList.adapter = Adapter(this, listData, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 when (position) {
                     0-> startActivity(JavaBaseActivity::class.java)

@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
 
@@ -49,7 +48,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     annotationProcessor project(':compiler')
     implementation project(':common')
-    implementation project(':webview')
+    //implementation project(':webview')
     implementation project(':JavaBase')
     compileOnly  rootProject.googleAutoServiceDependency
     annotationProcessor rootProject.googleAutoServiceDependency

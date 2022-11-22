@@ -3,21 +3,23 @@ package com.hulk.androidstudy.widget
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hulk.androidstudy.MainActivity
 import com.hulk.androidstudy.R
-import kotlinx.android.synthetic.main.activity_widget.*
+import com.hulk.androidstudy.databinding.ActivityWidgetBinding
 
 class WidgetActivity : Activity() {
+    private lateinit var mBinding:ActivityWidgetBinding
     private val listData = arrayListOf("绘制文字", "点赞控件", "SeekBar", "自定义ViewGroup", "FlowLayout")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_widget)
-        rv_list.layoutManager = LinearLayoutManager(this)
-        rv_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        rv_list.adapter =
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_widget)
+        mBinding.rvList.layoutManager = LinearLayoutManager(this)
+        mBinding.rvList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        mBinding.rvList.adapter =
                 MainActivity.Adapter(this, listData, object : MainActivity.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         when (position) {
