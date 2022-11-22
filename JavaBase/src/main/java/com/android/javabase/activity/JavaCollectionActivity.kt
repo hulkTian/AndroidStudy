@@ -1,16 +1,21 @@
 package com.android.javabase.activity
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.android.java_base.R
-import com.android.java_base.databinding.ActivityJavaCollectionBinding
+import com.hulk.common.base.CommonListActivity
 
-class JavaCollectionActivity : AppCompatActivity() {
-    private lateinit var mBinding : ActivityJavaCollectionBinding
+class JavaCollectionActivity : CommonListActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_java_collection)
+    override fun getListData(): ArrayList<String> {
+        return arrayListOf(
+            "ArrayList",
+            "Java LinkedList",
+            "Java 注解",
+            "Java 反射",
+            "Java I/O",
+            "Java 序列化",
+        )
+    }
+    
+    override fun onItemClick(position: Int) {
+        
     }
 }

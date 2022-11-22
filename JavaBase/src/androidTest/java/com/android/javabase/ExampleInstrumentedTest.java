@@ -1,4 +1,4 @@
-package com.android.java_base;
+package com.android.javabase;
 
 import android.content.Context;
 
