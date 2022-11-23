@@ -15,7 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -40,16 +39,20 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    annotationProcessor project(':compiler')
     implementation project(':common')
-    //implementation project(':webview')
     implementation project(':JavaBase')
+    implementation project(':concurrent')
+    implementation project(':framework')
+    implementation project(':network')
+    implementation project(':kotlin')
+    implementation project(':jvm')
+    implementation project(':algorithms')
+    implementation project(':performance')
+    implementation project(':view')
+    implementation project(':OpenSource')
+    implementation project(':jetpack')
+    implementation project(':NDK')
+    implementation project(':GradleStudy')
     compileOnly  rootProject.googleAutoServiceDependency
     annotationProcessor rootProject.googleAutoServiceDependency
 }

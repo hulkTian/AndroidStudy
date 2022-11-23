@@ -14,8 +14,9 @@ class JavaCollectionActivity : CommonListActivity() {
             "Java 序列化",
         )
     }
-    
-    override fun onItemClick(position: Int) {
-        
+
+    override fun getActivityListData(): ArrayList<Class<*>> {
+        TODO("Not yet implemented")
     }
+
 }

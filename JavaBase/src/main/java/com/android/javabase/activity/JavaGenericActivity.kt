@@ -1,16 +1,14 @@
 package com.android.javabase.activity
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.android.javabase.R
 import com.android.javabase.databinding.ActivityJavaGenericBinding
+import com.hulk.common.base.BaseActivity
 
-class JavaGenericActivity: AppCompatActivity() {
-    private lateinit var mBinding : ActivityJavaGenericBinding
+/**
+ * 泛型知识
+ */
+class JavaGenericActivity : BaseActivity<ActivityJavaGenericBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_java_generic)
-    }
+    override fun getLayoutId(): Int = R.layout.activity_java_generic
+
 }

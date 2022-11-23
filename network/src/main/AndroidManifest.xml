@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.network">
+
+
+    <application>
+        <activity
+            android:name=".activity.JavaNetworkActivity"
+            android:screenOrientation="portrait" />
+    </application>
+</manifest>

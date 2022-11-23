@@ -1,25 +1,24 @@
 package com.hulk.androidstudy.widget
 
-import android.app.Activity
 import android.os.Bundle
 import android.widget.SeekBar
-import androidx.databinding.DataBindingUtil
 import com.hulk.androidstudy.R
 import com.hulk.androidstudy.databinding.ActivitySeekBarBinding
+import com.hulk.common.base.BaseActivity
 
 /**
  * Created by tzh on 2021/5/10.
  */
-class SeekBarActivity : Activity() {
-    private lateinit var mBinding : ActivitySeekBarBinding
+class SeekBarActivity : BaseActivity<ActivitySeekBarBinding>() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_seek_bar)
         mBinding.sbScale.max = 5
         mBinding.sbScale.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mBinding.tvScale.text = progress.toString()
-                val xUnit = (mBinding.sbScale.width - mBinding.sbScale.paddingStart - mBinding.sbScale.paddingEnd) / mBinding.sbScale.max
+                val xUnit = (mBinding.sbScale.width - mBinding.sbScale.paddingStart -
+                        mBinding.sbScale.paddingEnd) / mBinding.sbScale.max
                 mBinding.tvScale.x = (xUnit * progress + mBinding.tvScale.width / 4).toFloat()
             }
 
@@ -31,4 +30,6 @@ class SeekBarActivity : Activity() {
         })
         mBinding.sbScale.progress = 0
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_seek_bar
 }

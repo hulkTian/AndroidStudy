@@ -3,7 +3,11 @@
     package="com.android.javabase">
 
     <application>
-        <activity android:name="com.android.javabase.activity.JavaBaseActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.android.javabase.activity.JavaCollectionActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.android.javabase.activity.JavaBaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.android.javabase.activity.JavaCollectionActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>
