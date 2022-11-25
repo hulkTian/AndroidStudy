@@ -1,14 +1,15 @@
 package com.android.performance.activity
 
-import com.hulk.common.base.CommonListActivity
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class PerformanceActivity:CommonListActivity() {
-    override fun getListData(): ArrayList<String> {
+class PerformanceActivity:CommonMenuListActivity() {
+    override fun getListData(): ArrayList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 

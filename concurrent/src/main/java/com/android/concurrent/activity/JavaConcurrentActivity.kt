@@ -1,16 +1,17 @@
 package com.android.concurrent.activity
 
-import com.hulk.common.base.CommonListActivity
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description 并发编程
  * @author
  * @time
  */
-class JavaConcurrentActivity: CommonListActivity() {
+class JavaConcurrentActivity: CommonMenuListActivity() {
 
-    override fun getListData(): ArrayList<String> = arrayListOf(
-        "Java 容器", "Java 泛型", "Java 注解", "Java 反射", "Java I/O", "Java 序列化",
+    override fun getListData(): ArrayList<BaseItemBean> = arrayListOf(
+        TODO("Not yet implemented")
     )
 
     override fun getActivityListData(): ArrayList<Class<*>> {

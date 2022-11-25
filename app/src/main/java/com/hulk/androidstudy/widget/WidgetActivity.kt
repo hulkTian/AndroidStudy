@@ -1,11 +1,12 @@
 package com.hulk.androidstudy.widget
 
-import com.hulk.common.base.CommonListActivity
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseItemBean
 
-class WidgetActivity : CommonListActivity() {
+class WidgetActivity : CommonMenuListActivity() {
 
-    override fun getListData(): ArrayList<String> =
-        arrayListOf("绘制文字", "点赞控件", "SeekBar", "自定义ViewGroup", "FlowLayout")
+    override fun getListData(): ArrayList<BaseItemBean> =
+        arrayListOf(/*"绘制文字", "点赞控件", "SeekBar", "自定义ViewGroup", "FlowLayout"*/)
 
     override fun getActivityListData(): ArrayList<Class<*>> = arrayListOf(
         MyTextViewActivity::class.java,

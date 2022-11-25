@@ -1,14 +1,15 @@
 package com.android.network.activity
 
-import com.hulk.common.base.CommonListActivity
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description java网络编程
  * @author: ts
  * @date: 2022/11/23
  */
-class JavaNetworkActivity : CommonListActivity(){
-    override fun getListData(): ArrayList<String> {
+class JavaNetworkActivity : CommonMenuListActivity(){
+    override fun getListData(): ArrayList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 

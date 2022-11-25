@@ -1,18 +1,27 @@
 package com.android.framework.activity
 
-import com.hulk.common.base.CommonListActivity
+import com.android.framework.R
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseDataBean
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class FrameworkActivity : CommonListActivity() {
+class FrameworkActivity : CommonMenuListActivity() {
 
-    override fun getListData(): ArrayList<String> = arrayListOf(
-        "Binder进程间通信", "Activity启动过程", "Service启动过程", "广播机制", "Content Provider实现原理",
-        "zygote和system进程启动过程", "应用程序进程启动过程", "应用程序线程的消息循环机制",
-        "应用程序的安装和显示过程"
+    override fun getListData(): ArrayList<BaseItemBean> = arrayListOf(
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("Binder进程间通信")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("Activity启动过程")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("Service启动过程")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("广播机制")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("ContentProvider实现原理")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("zygote和system进程启动过程")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("应用程序进程启动过程")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("应用程序线程的消息循环机制")),
+        BaseItemBean(R.layout.adapter_main, BaseDataBean("应用程序的安装和显示过程")),
     )
 
     override fun getActivityListData(): ArrayList<Class<*>> = arrayListOf(

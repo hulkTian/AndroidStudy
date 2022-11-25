@@ -1,14 +1,15 @@
 package com.android.jetpack.activity
 
-import com.hulk.common.base.CommonListActivity
+import com.hulk.common.base.CommonMenuListActivity
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class JetpackActivity:CommonListActivity() {
-    override fun getListData(): ArrayList<String> {
+class JetpackActivity:CommonMenuListActivity() {
+    override fun getListData(): ArrayList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 
