@@ -4,6 +4,7 @@
     package="com.hulk.androidstudy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".MyApplication"
@@ -68,6 +69,9 @@
         <activity android:name=".widget.SeekBarActivity" />
         <activity android:name=".widget.CustomLayoutActivity" />
         <activity android:name=".widget.FlowLayoutActivity" />
+        <activity android:name=".widget.layout_manager.MyLayoutManagerActivity" />
+        <activity android:name=".window.WindowDemoActivity"/>
+        <service android:name=".window.MyService"/>
     </application>
 
 </manifest>

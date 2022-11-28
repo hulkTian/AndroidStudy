@@ -76,7 +76,7 @@ class GridAdapter(fragment: Fragment) : RecyclerView.Adapter<GridAdapter.ImageVi
             (fragment.exitTransition as TransitionSet).excludeTarget(view, true)
 
             val transitionView = view.findViewById<ImageView>(R.id.card_image)
-            fragment.fragmentManager?.beginTransaction()
+            fragment.parentFragmentManager?.beginTransaction()
                 ?.setReorderingAllowed(true)
                 ?.addSharedElement(transitionView, transitionView.transitionName)
                 ?.replace(

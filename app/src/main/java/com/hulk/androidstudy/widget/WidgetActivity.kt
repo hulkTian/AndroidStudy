@@ -5,7 +5,7 @@ import com.hulk.common.bean.BaseItemBean
 
 class WidgetActivity : CommonMenuListActivity() {
 
-    override fun getListData(): ArrayList<BaseItemBean> =
+    override fun getListData(): MutableList<BaseItemBean> =
         arrayListOf(/*"绘制文字", "点赞控件", "SeekBar", "自定义ViewGroup", "FlowLayout"*/)
 
     override fun getActivityListData(): ArrayList<Class<*>> = arrayListOf(

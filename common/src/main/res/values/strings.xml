@@ -28,4 +28,5 @@
     <string name="best_practices">best practices</string>
     <string name="default_loadsir_callback">default LoadSir Callback</string>
     <string name="keep_title_bar_in_activity">keep title bar in Activity</string>
+    <string name="item_overview">概述</string>
 </resources>

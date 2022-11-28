@@ -1,26 +1,24 @@
 package com.android.framework.activity
 
-import com.android.framework.R
-import com.hulk.common.base.BaseActivity
-import com.hulk.common.base.CommonMenuListActivity
+import com.android.framework.data.BinderDataProvider
+import com.chad.library.adapter.base.provider.BaseItemProvider
+import com.hulk.common.base.BaseListActivity
 import com.hulk.common.bean.BaseItemBean
-import com.hulk.common.databinding.CommonLayoutRecycleViewBinding
 
 /**
- * @description
+ * @description Binder相关知识
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class BinderActivity: CommonMenuListActivity() {
+class BinderActivity : BaseListActivity() {
 
-    override fun getLayoutId(): Int = R.layout.common_layout_recycle_view
-    override fun getListData(): ArrayList<BaseItemBean> {
-        TODO("Not yet implemented")
+    override fun initDataProvider() {
+        mDataProvider = BinderDataProvider()
     }
 
-    override fun getActivityListData(): ArrayList<Class<*>> {
-        TODO("Not yet implemented")
-    }
+    override fun getListData(): MutableList<BaseItemBean> = mDataProvider.getPageData()
 
+    override fun getItemProviderData(): MutableList<BaseItemProvider<BaseItemBean>> =
+        mDataProvider.getItemProviderData()
 
 }

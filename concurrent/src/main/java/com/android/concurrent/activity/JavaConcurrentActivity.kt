@@ -10,7 +10,7 @@ import com.hulk.common.bean.BaseItemBean
  */
 class JavaConcurrentActivity: CommonMenuListActivity() {
 
-    override fun getListData(): ArrayList<BaseItemBean> = arrayListOf(
+    override fun getListData(): MutableList<BaseItemBean> = arrayListOf(
         TODO("Not yet implemented")
     )
 

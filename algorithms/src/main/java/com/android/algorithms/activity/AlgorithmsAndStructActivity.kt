@@ -8,8 +8,8 @@ import com.hulk.common.bean.BaseItemBean
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class AlgorithmsAndStructActivity:CommonMenuListActivity() {
-    override fun getListData(): ArrayList<BaseItemBean> {
+class AlgorithmsAndStructActivity : CommonMenuListActivity() {
+    override fun getListData(): MutableList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 

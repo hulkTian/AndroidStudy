@@ -1,5 +1,6 @@
 package com.android.gradle.activity
 
+import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.hulk.common.base.CommonMenuListActivity
 import com.hulk.common.bean.BaseItemBean
 
@@ -9,7 +10,7 @@ import com.hulk.common.bean.BaseItemBean
  * @date: 2022/11/23
  */
 class GradleActivity : CommonMenuListActivity() {
-    override fun getListData(): ArrayList<BaseItemBean> {
+    override fun getListData(): MutableList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 

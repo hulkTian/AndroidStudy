@@ -9,7 +9,7 @@ import com.hulk.common.bean.BaseItemBean
  * @date: 2022/11/23
  */
 class NDKActivity:CommonMenuListActivity() {
-    override fun getListData(): ArrayList<BaseItemBean> {
+    override fun getListData(): MutableList<BaseItemBean> {
         TODO("Not yet implemented")
     }
 

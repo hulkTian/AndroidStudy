@@ -111,7 +111,7 @@ public class CustomLayout extends ViewGroup {
                 final int width = child.getMeasuredWidth();
                 final int height = child.getMeasuredHeight();
 
-                // Compute the frame in which we are placing this child.
+                //计算子View放置的区域
                 if (lp.position == LayoutParams.POSITION_LEFT) {
                     mTmpContainerRect.left = leftPos + lp.leftMargin;
                     mTmpContainerRect.right = leftPos + width + lp.rightMargin;
@@ -126,9 +126,9 @@ public class CustomLayout extends ViewGroup {
                 }
                 mTmpContainerRect.top = parentTop + lp.topMargin;
                 mTmpContainerRect.bottom = parentBottom - lp.bottomMargin;
-
+                //根据重力常数即子View的尺寸确定子View的位置
                 Gravity.apply(lp.gravity, width, height, mTmpContainerRect, mTmpChildRect);
-
+                //设置子View的位置
                 child.layout(mTmpChildRect.left, mTmpChildRect.top,
                         mTmpChildRect.right, mTmpChildRect.bottom);
             }
