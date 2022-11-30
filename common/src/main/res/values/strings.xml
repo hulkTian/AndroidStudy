@@ -29,4 +29,7 @@
     <string name="default_loadsir_callback">default LoadSir Callback</string>
     <string name="keep_title_bar_in_activity">keep title bar in Activity</string>
     <string name="item_overview">概述</string>
+    <string name="item_struct_name">结构体名称</string>
+    <string name="item_effect">作用描述</string>
+    <string name="item_process">过程描述</string>
 </resources>

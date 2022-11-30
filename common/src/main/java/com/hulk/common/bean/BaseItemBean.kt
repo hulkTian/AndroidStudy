@@ -9,5 +9,8 @@ package com.hulk.common.bean
  */
 data class BaseItemBean(
     var itemType: Int,
-    var title: String,
+    var title: String? = null,
+    var titles: MutableList<String>? = null,
+    var isFirstPosition: Boolean = false,
+    var isLastPosition: Boolean = false
 )

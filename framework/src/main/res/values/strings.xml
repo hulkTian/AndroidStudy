@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="binder_title_struct">基础数据结构</string>
+    <string name="binder_item_overview_description">Android系统是基于Linux内核开发的。提供了丰富的进程间
+        通信机制，如管道（Pipe）、信号（Signal）、消息队列（Message）、共享内存（Share Memory）
+        和插口（Socket）等。而Android却开发了一套新的进程间通信机制——Binder。与传统的进程间通信机制相比，
+        Binder进程间通信机制在进程间传输数据时，只需要执行一次复制操作，因此，它不仅提高了效率，而且节省了内存空间。
+        \nBinder进程间通信机制采用CS通信方式。提供服务的进程叫Server进程，访问服务的进程叫Client进程。
+        \n同一个Server进程可以同时运行多个组件来向Client进程提供服务，这些组件称为Service组件。
+        \n同一个Client进程也可以同时向多个Service组件请求服务，每个请求都对应一个Client组件，或者叫Service代理对象。
+        \n每一个Server进程和Client进程都维护一个Binder线程池来处理进程间的通信请求，
+        因此，它们可以并发地提供和访问服务。运行在内核空间的Binder驱动程序为两者的通信提供支持。
+        \nService组件在启动时，会将自己注册到一个Service Manager组件中，以便Client组件可以通过
+        Service Manager组件找到它。因此，我们将Service Manager组件称为Binder进程间通信机制的上下文管理者。
+        同时，由于它也需要与普通的Server进程和Client进程通信，我们也将它看作是一个特殊的Service组件。
+    </string>
+    <string name="binder_device_init">Binder设备文件的初始化过程</string>
+    <string name="binder_device_open">Binder设备文件的打开过程</string>
+    <string name="binder_device_mmap">Binder设备文件的内存映射</string>
 </resources>

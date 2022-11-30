@@ -12,4 +12,39 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingStart">15dp</item>
     </style>
+
+    <!--文本描述-->
+    <style name="TextDesc">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingStart">15dp</item>
+    </style>
+
+    <!--表格单元格内容-->
+    <style name="TextCell">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--表格行分割线-->
+    <style name="TabRowLine">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!--表格列分割线-->
+    <style name="TabColumnLine">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">1dp</item>
+    </style>
 </resources>

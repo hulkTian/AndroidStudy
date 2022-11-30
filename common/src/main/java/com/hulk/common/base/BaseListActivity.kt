@@ -21,6 +21,7 @@ abstract class BaseListActivity : BaseActivity<CommonLayoutRecycleViewBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initDataProvider()
         initAdapter()
     }
 

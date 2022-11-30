@@ -13,6 +13,8 @@ class DescItemProvider(
     override val itemViewType: Int = ItemTypeConstants.ITEM_TYPE_DESC,
     override val layoutId: Int = R.layout.item_provider_desc
 ) : BaseItemProvider<BaseItemBean>() {
+
     override fun convert(helper: BaseViewHolder, item: BaseItemBean) {
+        helper.setText(R.id.tv_desc, item.title)
     }
 }

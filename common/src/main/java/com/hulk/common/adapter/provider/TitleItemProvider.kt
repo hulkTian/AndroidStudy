@@ -13,7 +13,9 @@ class TitleItemProvider(
     override val itemViewType: Int = ItemTypeConstants.ITEM_TYPE_TITLE,
     override val layoutId: Int = R.layout.item_provider_title
 ) : BaseItemProvider<BaseItemBean>() {
+
     override fun convert(helper: BaseViewHolder, item: BaseItemBean) {
+        helper.setText(R.id.tv_title, item.title)
     }
 
 }

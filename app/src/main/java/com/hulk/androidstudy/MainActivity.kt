@@ -24,6 +24,7 @@ class MainActivity : CommonMenuListActivity() {
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Java基础"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Java并发编程"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Java网络编程"),
+        BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Kotlin语言"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "算法与数据结构"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "java/android虚拟机"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Android View框架体系"),
