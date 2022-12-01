@@ -5,7 +5,6 @@ import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.hulk.common.adapter.provider.*
 import com.hulk.common.bean.BaseDataProvider
 import com.hulk.common.bean.BaseItemBean
-import com.hulk.common.constants.ItemTypeConstants
 import com.hulk.common.utils.UiUtils
 
 /**
@@ -15,7 +14,6 @@ import com.hulk.common.utils.UiUtils
 class BinderDataProvider : BaseDataProvider() {
 
     override fun getPageData(): MutableList<BaseItemBean> {
-        val dataList = mutableListOf<BaseItemBean>()
         //概述标题
         dataList.add(buildTitleItemBean(R.string.item_overview))
         //概述内容
@@ -29,60 +27,36 @@ class BinderDataProvider : BaseDataProvider() {
                 UiUtils.getString(R.string.item_effect)
             )
         )
+        dataList.add(buildTabItemBean("binder_work", "描述待处理的工作项"))
         dataList.add(
-            buildTabItemBean(
-                "binder_work", "描述待处理的工作项"
-            )
+            buildTabItemBean("binder_node", "描述一个Binder实体对象，表示一个Service组件")
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_node", "描述一个Binder实体对象，表示一个Service组件"
-            )
+            buildTabItemBean("binder_ref", "描述一个Binder引用对象，表示一个Client组件")
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_ref", "描述一个Binder引用对象，表示一个Client组件"
-            )
+            buildTabItemBean("binder_ref_death", "描述一个Service组件的死亡接收通知")
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_ref_death", "描述一个Service组件的死亡接收通知"
-            )
+            buildTabItemBean("binder_buffer", "描述一个内核缓冲区，用来在进程间传递数据")
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_buffer", "描述一个内核缓冲区，用来在进程间传递数据"
-            )
+            buildTabItemBean("binder_pro", "描述一个正在使用Binder进程间通信机制的进程")
         )
-        dataList.add(
-            buildTabItemBean(
-                "binder_pro", "描述一个正在使用Binder进程间通信机制的进程"
-            )
-        )
-        dataList.add(
-            buildTabItemBean(
-                "binder_thread", "描述Binder线程池中的一个线程"
-            )
-        )
+        dataList.add(buildTabItemBean("binder_thread", "描述Binder线程池中的一个线程"))
         dataList.add(
             buildTabItemBean(
                 "binder_transaction", "描述进程间通信过程，这个过程称为一个事务"
             )
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_write_read", "描述进程间通信过程中所传输的数据"
-            )
+            buildTabItemBean("binder_write_read", "描述进程间通信过程中所传输的数据")
         )
         dataList.add(
-            buildTabItemBean(
-                "BinderDriverCommandProtocol", "枚举值来定义命令协议代码"
-            )
+            buildTabItemBean("BinderDriverCommandProtocol", "枚举值来定义命令协议代码")
         )
         dataList.add(
-            buildTabItemBean(
-                "BinderDriverReturnProtocol", "枚举值来定义返回协议代码"
-            )
+            buildTabItemBean("BinderDriverReturnProtocol", "枚举值来定义返回协议代码")
         )
         dataList.add(
             buildTabItemBean(
@@ -91,9 +65,7 @@ class BinderDataProvider : BaseDataProvider() {
             )
         )
         dataList.add(
-            buildTabItemBean(
-                "binder_transaction_data", "描述进程间通信过程中所传输的数据"
-            )
+            buildTabItemBean("binder_transaction_data", "描述进程间通信过程中所传输的数据")
         )
         //基础数据结构表格最后一行
         dataList.add(
@@ -126,7 +98,10 @@ class BinderDataProvider : BaseDataProvider() {
         dataList.add(buildTabLastItemBean("把binder_proc结构体保存在一个hash队列便于检索"))
         //Binder设备的内存映射过程
         dataList.add(buildTitleItemBean(R.string.binder_device_mmap))
-
+        dataList.add(buildDescItemBean(R.string.binder_device_mmap_description))
+        //内核缓冲区管理
+        dataList.add(buildTitleItemBean(R.string.binder_buffer_manager))
+        dataList.add(buildDescItemBean(R.string.binder_buffer_manager_description))
         return dataList
     }
 
@@ -138,72 +113,5 @@ class BinderDataProvider : BaseDataProvider() {
         DescItemProvider(),
         TabItemProvider(),
     )
-
-    /**
-     * 构建一级标题item.
-     */
-    private fun buildTitleItemBean(titleId: Int) =
-        BaseItemBean(ItemTypeConstants.ITEM_TYPE_TITLE, title = UiUtils.getString(titleId))
-
-    /**
-     * 构建描述内容
-     */
-    private fun buildDescItemBean(descId: Int) =
-        BaseItemBean(ItemTypeConstants.ITEM_TYPE_DESC, title = UiUtils.getString(descId))
-
-    /**
-     * 构建表格行
-     */
-    private fun buildTabItemBean(effect: String) =
-        BaseItemBean(ItemTypeConstants.ITEM_TYPE_TAB_ROW, titles = mutableListOf(effect))
-
-    /**
-     * 构建表格行
-     */
-    private fun buildTabItemBean(structName: String, effect: String) =
-        BaseItemBean(
-            ItemTypeConstants.ITEM_TYPE_TAB_ROW,
-            titles = mutableListOf(structName, effect)
-        )
-
-    /**
-     * 构建表格第一行
-     */
-    private fun buildTabFirstItemBean(effect: String) =
-        BaseItemBean(
-            ItemTypeConstants.ITEM_TYPE_TAB_ROW,
-            titles = mutableListOf(effect),
-            isFirstPosition = true
-        )
-
-    /**
-     * 构建表格第一行
-     */
-    private fun buildTabFirstItemBean(structName: String, effect: String) =
-        BaseItemBean(
-            ItemTypeConstants.ITEM_TYPE_TAB_ROW,
-            titles = mutableListOf(structName, effect),
-            isFirstPosition = true
-        )
-
-    /**
-     * 构建表格最后一行
-     */
-    private fun buildTabLastItemBean(effect: String) =
-        BaseItemBean(
-            ItemTypeConstants.ITEM_TYPE_TAB_ROW,
-            titles = mutableListOf(effect),
-            isLastPosition = true
-        )
-
-    /**
-     * 构建表格最后一行
-     */
-    private fun buildTabLastItemBean(structName: String, effect: String) =
-        BaseItemBean(
-            ItemTypeConstants.ITEM_TYPE_TAB_ROW,
-            titles = mutableListOf(structName, effect),
-            isLastPosition = true
-        )
 
 }

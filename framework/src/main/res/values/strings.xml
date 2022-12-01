@@ -17,4 +17,30 @@
     <string name="binder_device_init">Binder设备文件的初始化过程</string>
     <string name="binder_device_open">Binder设备文件的打开过程</string>
     <string name="binder_device_mmap">Binder设备文件的内存映射</string>
+    <string name="binder_device_mmap_description">进程打开了设备文件/dev/binder之后，还必须调用函数mmap把这个
+        设备文件映射到进程的地址空间，然后才可以使用Binder进程间通信机制。设备文件/dev/binder对应的是一个虚拟的设备，
+        将它映射到进程的地址空间的目的不是对他的内容感兴趣，而是为了为进程分配内核缓冲区，以便它可以用来传输通信数据。
+        进程调用函数mmap，Binder驱动程序中的函数binder_mmap就会被调用。</string>
+    <string name="binder_buffer_manager">内核缓冲区管理</string>
+    <string name="binder_buffer_manager_description">开始的时候，Binder驱动程序只为进程分配一个页面的物理内存，
+        后面会随着进程的需要分配更多的物理内存，但是最多可以分配4M内存，这是一个按需分配策略。
+        物理内存的分配是以页面为单位，但是进程一次使用的内存不是页面为单位，因此，Binder驱动程序为进程维护了一个内核缓冲区池，
+        其中的每一块内存都使用一个binder_buffer结构体描述，并保存在一个列表中。同时，Binder驱动程序又将正在使用的内存块，
+        以及空闲的内存块，分别保存在两个红黑树中。当正在使用的内存块使用完后，Binder驱动程序就会释放它的物理页面，
+        并且把它加入到空闲内核缓冲区红黑树中；当进程需要新的内存块时，Binder驱动程序就从空闲内核缓冲区红黑树中分配一块合适
+        的内核缓冲区，并且为他分配物理页面，最后交给进程使用。</string>
+    <string name="activity_start_process">根Activity的启动过程</string>
+    <string name="activity_start_process_description">Launcher组件启动MainActivity组件的过程如下所示：
+        \n1. Launcher组件向AMS发送一个启动MainActivity组件的进程间通信请求。
+        \n2. AMS首先将要启动的MainActivity组件的信息保存下来，然后再向Launcher组件发送一个进入中止状态的进程间通信请求。
+        \n3. Launcher组件进入到中止状态后，会向AMS发送一个已进入中止状态的进程间通信请求，以便AMS可以继续执行启动MainActivity组件的操作。
+        \n4. AMS发现用来运行MainActivity组件的应用程序进程不存在，因此，就会先启动一个新的应用程序进程。
+        \n5. 新的应用程序进程启动完成后，就会向ActivityMangerService发送一个启动完成的进程间通信请求，以便AMS可以继续执行启动MainActivity组件的操作。
+        \n6. AMS将第2步保存下来的MainActivity组件的信息发送给第4步创建的应用程序进程，以便它可以将MainActivity组件启动起来。</string>
+    <string name="service_start_process">Service组件在新进程中的启动过程</string>
+    <string name="service_start_description">Client组件启动Server组件的过程如下所示。
+        \n1. Client组件向AMS发送一个Server组件的进程间通信请求。
+        \n2. AMS发现用来运行Server组件的应用程序进程不存在，因此，他会首先将Server组件的信息保存下来，接着再创建一个新的应用程序进程。
+        \n3. 新进程启动完成后，会向AMS发送一个启动完成的进程间通信请求，以便AMS可以继续执行启动Server组件的操作。
+        \n4. AMS将第2步保存下来的Server组件信息发送给第2步创建的应用程序进程，以便它可以将Server组件启动起来。</string>
 </resources>

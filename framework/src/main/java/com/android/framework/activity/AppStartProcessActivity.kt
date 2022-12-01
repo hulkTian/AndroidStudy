@@ -1,15 +1,21 @@
 package com.android.framework.activity
 
-import com.android.framework.R
-import com.android.framework.databinding.ActivityAppStartProcessBinding
-import com.hulk.common.base.BaseActivity
+import com.chad.library.adapter.base.provider.BaseItemProvider
+import com.hulk.common.base.BaseListActivity
+import com.hulk.common.bean.BaseItemBean
 
 /**
  * @description
  * @author: zehao.tian
  * @date: 2022/11/23
  */
-class AppStartProcessActivity : BaseActivity<ActivityAppStartProcessBinding>() {
+class AppStartProcessActivity : BaseListActivity() {
 
-    override fun getLayoutId(): Int = R.layout.activity_app_start_process
+    override fun getListData(): MutableList<BaseItemBean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getItemProviderData(): MutableList<BaseItemProvider<BaseItemBean>> {
+        TODO("Not yet implemented")
+    }
 }
