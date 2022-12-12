@@ -12,5 +12,7 @@ data class BaseItemBean(
     var title: String? = null,
     var titles: MutableList<String>? = null,
     var isFirstPosition: Boolean = false,
-    var isLastPosition: Boolean = false
+    var isLastPosition: Boolean = false,
+    var method: String? = null,
+    var imgRes: Int? = null
 )

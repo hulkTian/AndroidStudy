@@ -2,6 +2,7 @@ package com.hulk.common.utils
 
 import android.content.Context
 import android.content.res.Resources
+import android.widget.Toast
 import com.hulk.common.base.BaseApplication
 
 /**
@@ -18,4 +19,7 @@ object UiUtils {
 
     fun getString(id: Int): String = getApplication().getString(id)
 
+    fun showToast(content: String) {
+        Toast.makeText(getApplication(), content, Toast.LENGTH_LONG).show()
+    }
 }

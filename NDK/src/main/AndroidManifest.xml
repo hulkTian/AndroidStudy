@@ -4,7 +4,46 @@
 
     <application>
         <activity
-            android:name=".activity.NDKActivity"
+            android:name=".main.NDKActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.CLActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.CPlusLActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.CMakeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.FFmpegActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.JNIActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.LinuxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.ShellActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_1.Chapter1Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_2.Chapter2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_3.Chapter3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_4.Chapter4Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_5.Chapter5Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".c_language.chapter_6.Chapter6Activity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

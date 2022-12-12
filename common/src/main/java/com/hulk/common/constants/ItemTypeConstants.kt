@@ -9,4 +9,5 @@ object ItemTypeConstants {
     const val ITEM_TYPE_DESC = 0x003
     const val ITEM_TYPE_TAB_ROW = 0x004
     const val ITEM_TYPE_TAB_ROW_BOTTOM = 0x005
+    const val ITEM_TYPE_RUN = 0x006
 }

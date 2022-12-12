@@ -1,6 +1,5 @@
-package com.android.framework.activity
+package com.android.ndk.c_language.chapter_2
 
-import com.android.framework.data.ActivityStartProcessProvider
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.hulk.common.base.BaseListActivity
 import com.hulk.common.bean.BaseItemBean
@@ -8,12 +7,11 @@ import com.hulk.common.bean.BaseItemBean
 /**
  * @description
  * @author: zehao.tian
- * @date: 2022/11/23
+ * @date: 2022/12/7
  */
-class ActivityStartProcessActivity : BaseListActivity() {
+class Chapter2Activity:BaseListActivity() {
 
     override fun initDataProvider() {
-        mDataProvider = ActivityStartProcessProvider()
+        super.initDataProvider()
     }
-
 }

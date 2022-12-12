@@ -9,7 +9,7 @@ import com.android.jetpack.activity.JetpackActivity
 import com.android.jvm.activity.JVMActivity
 import com.android.kotlin.activity.KotlinActivity
 import com.android.network.activity.JavaNetworkActivity
-import com.android.ndk.activity.NDKActivity
+import com.android.ndk.main.NDKActivity
 import com.android.open.activity.OpenSourceActivity
 import com.android.performance.activity.PerformanceActivity
 import com.android.view.activity.ViewActivity

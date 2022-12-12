@@ -34,7 +34,8 @@ abstract class BaseListActivity : BaseActivity<CommonLayoutRecycleViewBinding>()
 
     }
 
-    abstract fun getListData(): MutableList<BaseItemBean>
+    open fun getListData(): MutableList<BaseItemBean> = mDataProvider.getPageData()
 
-    abstract fun getItemProviderData():MutableList<BaseItemProvider<BaseItemBean>>
+    open fun getItemProviderData(): MutableList<BaseItemProvider<BaseItemBean>> =
+        mDataProvider.getItemProviderData()
 }

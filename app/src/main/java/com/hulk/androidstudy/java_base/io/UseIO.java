@@ -908,9 +908,9 @@ public class UseIO {
 //        BufferedOutputStream out = new BufferedOutputStream(new GZIPOutputStream(
 //                new FileOutputStream("E:/test.gz")));
 //        System.out.println("Writing File");
-//        int c;
-//        while ((c = in.read()) != -1) {
-//            out.write(c);
+//        int c_language;
+//        while ((c_language = in.read()) != -1) {
+//            out.write(c_language);
 //        }
         in.close();
         out.close();

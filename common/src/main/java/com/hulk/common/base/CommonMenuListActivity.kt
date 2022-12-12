@@ -27,6 +27,7 @@ abstract class CommonMenuListActivity : BaseListActivity() {
         }
     }
 
+
     override fun getItemProviderData(): MutableList<BaseItemProvider<BaseItemBean>> = mutableListOf(
         MenuItemProvider()
     )

@@ -9,8 +9,20 @@
         style="@style/TextDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_desc"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="fitStart"
+        android:src="@mipmap/c_one"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

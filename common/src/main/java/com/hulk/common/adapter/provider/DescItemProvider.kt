@@ -1,5 +1,8 @@
 package com.hulk.common.adapter.provider
 
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.chad.library.adapter.base.provider.BaseItemProvider
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hulk.common.R
@@ -15,6 +18,20 @@ class DescItemProvider(
 ) : BaseItemProvider<BaseItemBean>() {
 
     override fun convert(helper: BaseViewHolder, item: BaseItemBean) {
-        helper.setText(R.id.tv_desc, item.title)
+        val tvDesc = helper.getView<TextView>(R.id.tv_desc)
+        if (item.title.isNullOrEmpty()) {
+            tvDesc.visibility = View.GONE
+        } else {
+            tvDesc.visibility = View.VISIBLE
+            tvDesc.text = item.title
+        }
+        val ivDesc = helper.getView<ImageView>(R.id.iv_desc)
+        if (item.imgRes == null) {
+            ivDesc.visibility = View.GONE
+        } else {
+            ivDesc.visibility = View.VISIBLE
+            ivDesc.setImageResource(item.imgRes!!)
+        }
     }
+
 }
