@@ -4,8 +4,15 @@
 
 #ifndef ANDROIDSTUDY_CHAPTER_ONE_H
 #define ANDROIDSTUDY_CHAPTER_ONE_H
+
 #include <stdio.h>
-//声明全局变量
-extern char * content;
+enum CurrentMethod {
+    RUN_MAIN,
+    RUN_POINT_AND_ADDRESS,
+} currentMethod;
+
+void pointAndAddress();
+
 int main();
+
 #endif //ANDROIDSTUDY_CHAPTER_ONE_H

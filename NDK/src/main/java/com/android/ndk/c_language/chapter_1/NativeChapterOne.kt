@@ -10,4 +10,6 @@ import com.android.ndk.main.NativeLib
 class NativeChapterOne: NativeLib() {
 
     external fun runMain():String
+
+    external fun pointAndAddress():String
 }
