@@ -1,8 +1,9 @@
 #include <string>
 #include <jni.h>
 #include "c_language/chapter_one.h"
-//定义全局变量
-extern char *content;
+
+//在此文件定义一个用于返回运行结果给java层的内容的字符串
+char *content = nullptr;
 /*******************************C语言***************************************/
 
 /**
@@ -13,6 +14,9 @@ JNIEXPORT jstring JNICALL
 Java_com_android_ndk_c_1language_chapter_11_NativeChapterOne_runMain(JNIEnv *env, jobject thiz) {
     currentMethod = RUN_MAIN;
     main();
+    if (content == nullptr) {
+        std::strcpy(content, "null");
+    }
     return env->NewStringUTF(content);
 }
 
@@ -25,6 +29,9 @@ Java_com_android_ndk_c_1language_chapter_11_NativeChapterOne_pointAndAddress(JNI
                                                                              jobject thiz) {
     currentMethod = RUN_POINT_AND_ADDRESS;
     main();
+    if (content == nullptr) {
+        std::strcpy(content, "null");
+    }
     return env->NewStringUTF(content);
 }
 /*******************************C语言***************************************/

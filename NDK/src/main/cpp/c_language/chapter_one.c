@@ -8,14 +8,13 @@
 #include <string.h>
 #include <android/log.h>
 
-//定义全局变量
-char *content;
+extern char * content;
 
 void pointAndAddress() {
     int number = 100;
     int *numberP = &number;
-    content = "number的值是：%d\nnumberP的值是：%p\n*numberP的值是：%d";
-    printf(content, number, numberP, *numberP);
+    content = malloc(1);//分配内存控件
+    sprintf(content, "number的值是：%d\nnumberP的值是：%p\n*numberP的值是：%d", number, numberP, *numberP);
 }
 
 int main() {
