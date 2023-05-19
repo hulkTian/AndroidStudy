@@ -5,6 +5,7 @@ open class NativeLib {
     companion object {
         // Used to load the 'nativelib' library on application startup.
         init {
+            System.loadLibrary("getndk")
             System.loadLibrary("nativelib")
         }
     }

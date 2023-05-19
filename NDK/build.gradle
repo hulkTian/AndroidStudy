@@ -15,10 +15,16 @@ android {
         versionName "1.0"
 
         consumerProguardFiles "consumer-rules.pro"
-
-        ndk {
-            abiFilters 'x86_64'
+        externalNativeBuild {
+            cmake {
+//                cppFlags '' 默认四种平台都有
+                abiFilters "x86" //作为测试，只添加一种平台
+            }
         }
+        ndk {
+            abiFilters 'x86'
+        }
+        sourceSets.main.jniLibs.srcDirs = ['libs']
     }
 
     buildTypes {
@@ -33,7 +39,8 @@ android {
     }
     externalNativeBuild {
         cmake {
-            path "src/main/cpp/CMakeLists.txt"
+            //path "src/main/cpp/CMakeLists.txt"
+            path "src/main/CMakeLists.txt"
             version "3.10.2"
         }
     }
