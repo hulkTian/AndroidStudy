@@ -2,6 +2,7 @@ package com.hulk.common.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewbinding.ViewBinding
@@ -16,6 +17,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(javaClass.name, "getLayoutId() = " + getLayoutId() + "\nthis = " + this)
         mBinding = DataBindingUtil.setContentView(this, getLayoutId())
     }
 

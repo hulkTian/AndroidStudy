@@ -19,6 +19,9 @@
             android:name=".main.FFmpegActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".main.ffmpeg.FFmpegMediaActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".main.JNIActivity"
             android:screenOrientation="portrait" />
         <activity

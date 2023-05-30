@@ -10,13 +10,12 @@ add_library(nativelib SHARED ${SOURCE})
 # 第一步：导入头文件
 #include_directories("${CMAKE_SOURCE_DIR}/cpp/inc")
 # 第二步：导入库文件，在CMAKE_CXX_FLAGS上追加一个路径
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_ANDROID_ARCH_ABI}")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_ANDROID_ARCH_ABI}")
 
 # 导入库文件的第二种方式：
 # 导入libgetndk动态库
 #add_library(getndk SHARED IMPORTED)
-#set_target_properties(getndk PROPERTIES IMPORTED_LOCATION
-#        ${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_ANDROID_ARCH_ABI}/libgetndk.so)
+#set_target_properties(getndk PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_ANDROID_ARCH_ABI}/libgetndk.so)
 
 #导入libgetndk静态库
 #add_library(getndk STATIC IMPORTED)
@@ -25,4 +24,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_AN
 
 find_library(log-lib log)
 
-target_link_libraries(nativelib ${log-lib} getndk)
+include_directories(${CMAKE_SOURCE_DIR}/cpp/include)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L${CMAKE_SOURCE_DIR}/jniLibs/${CMAKE_ANDROID_ARCH_ABI}")
+message("CMAKE_CXX_FLAGS : ${CMAKE_CXX_FLAGS}")
+
+target_link_libraries(nativelib ${log-lib}
+        #getndk
+        #忽略顺序，需要如下配置：
+        -Wl,--start-group
+        avcodec avfilter avformat avutil swresample swscale
+        -Wl,--end-group)

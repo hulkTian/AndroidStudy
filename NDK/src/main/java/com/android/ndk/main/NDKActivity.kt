@@ -18,7 +18,6 @@ class NDKActivity : CommonMenuListActivity() {
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "JNI"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Linux系统"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "Shell脚本编成"),
-        BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "NDK交叉编译"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "FFmpeg交叉编译与集成"),
         BaseItemBean(ItemTypeConstants.ITEM_TYPE_MENU, "CMake构建工具"),
     )

@@ -17,13 +17,14 @@ android {
         consumerProguardFiles "consumer-rules.pro"
         externalNativeBuild {
             cmake {
-//                cppFlags '' 默认四种平台都有
-                abiFilters "x86" //作为测试，只添加一种平台
+                cppFlags '' //默认四种平台都有
+                //abiFilters "armeabi-v7a","x86_64","x86" //作为测试，只添加一种平台
             }
         }
         ndk {
-            abiFilters 'x86'
+            abiFilters 'armeabi-v7a','x86_64','x86','arm64-v8a'
         }
+
         sourceSets.main.jniLibs.srcDirs = ['libs']
     }
 
